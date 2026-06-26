@@ -1,27 +1,36 @@
 <!DOCTYPE html>
-<html lang="cs" data-theme="dark">
+<html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#13162B">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Solo Vltava">
-  <title>Solo Vltava</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Solo Vltava</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#13162B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-<!-- SVG Illustrations (time of day scenes) -->
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none" id="svg-defs">
+<!-- SVG sprite: ikony + scény + gradienty -->
+<svg width="0" height="0" style="position:absolute">
   <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 13h3l2-5 3 9 3-11 2 7h5"/></symbol>
+    <symbol id="i-mountain" viewBox="0 0 24 24"><path d="M2 18l5-8 3 4 4-9 4 7h4"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></symbol>
+    <symbol id="i-gallery" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="8" cy="10" r="1.4"/><path d="M4 16l4-4 3 3 5-6 4 5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.3"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 109.8 9.8z"/></symbol>
+    <symbol id="i-sync" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0115-6.7"/><path d="M21 12a9 9 0 01-15 6.7"/><path d="M16 2.6V8h-5"/><path d="M8 21.4V16h5"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></symbol>
 
-    <!-- Shared scene gradients (reference v5) -->
     <linearGradient id="skyRano" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFD9A8"/><stop offset="55%" stop-color="#FFB48C"/><stop offset="100%" stop-color="#7FD6C9"/></linearGradient>
     <linearGradient id="skyDen" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6EC6E0"/><stop offset="55%" stop-color="#9FE6DA"/><stop offset="100%" stop-color="#E3F7EF"/></linearGradient>
     <linearGradient id="skySoumrak" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#262460"/><stop offset="55%" stop-color="#7A4A6E"/><stop offset="100%" stop-color="#FF8C5A"/></linearGradient>
@@ -29,1033 +38,261 @@
     <linearGradient id="gradFillTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6FE0D2"/><stop offset="100%" stop-color="#1B8F86"/></linearGradient>
     <linearGradient id="gradFillCoral" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFC79A"/><stop offset="100%" stop-color="#E06A36"/></linearGradient>
 
-    <!-- RÁNO (5–10h) -->
-    <symbol id="scene-rano" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice">
+    <symbol id="scene-rano" viewBox="0 0 320 700">
       <rect width="320" height="700" fill="url(#skyRano)"/>
       <circle cx="225" cy="150" r="55" fill="#FFEAB3"/>
-      <path d="M55 95l8-7 8 7M95 130l7-6 7 6" stroke="#7A5C46" stroke-width="2" fill="none" stroke-linecap="round"/>
       <path d="M0 480 L60 400 L120 460 L180 380 L240 450 L300 410 L320 440 L320 700 L0 700 Z" fill="#2F8F73" opacity="0.55"/>
       <path d="M0 560 L70 460 L140 530 L210 440 L270 520 L320 470 L320 700 L0 700 Z" fill="#3FA37E"/>
       <path d="M62 468 L70 438 L78 468 Z" fill="#1F6B4E"/><path d="M202 448 L210 418 L218 448 Z" fill="#1F6B4E"/><path d="M255 470 L262 444 L269 470 Z" fill="#1F6B4E"/>
       <path d="M0 650 Q80 590 160 635 T320 610 L320 700 L0 700 Z" fill="#6FC79A"/>
       <path d="M195 560 C175 600 215 630 175 665 C155 685 165 695 150 700" stroke="#D9F2EC" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.85"/>
     </symbol>
-
-    <!-- DEN (10–17h) -->
-    <symbol id="scene-den" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice">
+    <symbol id="scene-den" viewBox="0 0 320 700">
       <rect width="320" height="700" fill="url(#skyDen)"/>
       <circle cx="170" cy="95" r="68" fill="#FFEFAF" opacity="0.35"/><circle cx="170" cy="95" r="38" fill="#FFF6CF"/>
       <path d="M0 480 L60 400 L120 460 L180 380 L240 450 L300 410 L320 440 L320 700 L0 700 Z" fill="#2E9C72" opacity="0.5"/>
       <path d="M0 560 L70 460 L140 530 L210 440 L270 520 L320 470 L320 700 L0 700 Z" fill="#3FB07F"/>
-      <path d="M62 468 L70 438 L78 468 Z" fill="#1B6B49"/><path d="M202 448 L210 418 L218 448 Z" fill="#1B6B49"/><path d="M255 470 L262 444 L269 470 Z" fill="#1B6B49"/>
       <path d="M0 650 Q80 590 160 635 T320 610 L320 700 L0 700 Z" fill="#79D79C"/>
       <path d="M195 560 C175 600 215 630 175 665 C155 685 165 695 150 700" stroke="#CFF3EA" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.9"/>
     </symbol>
-
-    <!-- SOUMRAK (17–21h) -->
-    <symbol id="scene-soumrak" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice">
+    <symbol id="scene-soumrak" viewBox="0 0 320 700">
       <rect width="320" height="700" fill="url(#skySoumrak)"/>
-      <circle cx="50" cy="80" r="1.6" fill="#F4E7B8"/><circle cx="120" cy="50" r="1.3" fill="#F4E7B8"/><circle cx="220" cy="90" r="1.6" fill="#F4E7B8"/><circle cx="280" cy="60" r="1.4" fill="#F4E7B8"/><circle cx="70" cy="150" r="1.2" fill="#F4E7B8"/><circle cx="250" cy="140" r="1.5" fill="#F4E7B8"/>
       <circle cx="230" cy="520" r="70" fill="#FFB36B" opacity="0.9"/>
       <path d="M0 470 L70 380 L140 450 L210 360 L270 440 L320 390 L320 700 L0 700 Z" fill="#232A4D"/>
       <path d="M0 560 L80 470 L160 540 L240 450 L300 530 L320 490 L320 700 L0 700 Z" fill="#2F3760"/>
       <path d="M120 680 L160 560 L200 680 Z" fill="#1B2040"/><polygon points="145,680 160,610 175,680" fill="#FF8C5A" opacity="0.9"/>
     </symbol>
-
-    <!-- NOC (21–5h) -->
-    <symbol id="scene-noc" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice">
+    <symbol id="scene-noc" viewBox="0 0 320 700">
       <rect width="320" height="700" fill="url(#skyNoc)"/>
-      <circle cx="110" cy="140" r="48" fill="#F4E7B8"/><circle cx="98" cy="128" r="6" fill="#E3D49B" opacity="0.5"/><circle cx="124" cy="152" r="4" fill="#E3D49B" opacity="0.5"/>
-      <circle cx="220" cy="60" r="1.5" fill="#F4E7B8"/><circle cx="270" cy="110" r="1.3" fill="#F4E7B8"/><circle cx="60" cy="220" r="1.4" fill="#F4E7B8"/><circle cx="290" cy="200" r="1.6" fill="#F4E7B8"/><circle cx="150" cy="40" r="1.2" fill="#F4E7B8"/><circle cx="30" cy="90" r="1.3" fill="#F4E7B8"/>
+      <circle cx="110" cy="140" r="48" fill="#F4E7B8"/>
       <path d="M0 470 L80 380 L160 450 L230 360 L300 440 L320 400 L320 700 L0 700 Z" fill="#1B1E3D"/>
       <path d="M0 560 L90 470 L170 540 L250 450 L310 530 L320 500 L320 700 L0 700 Z" fill="#262B52"/>
-      <line x1="250" y1="450" x2="250" y2="410" stroke="#9098B8" stroke-width="1.6"/><polygon points="250,410 270,420 250,430" fill="#2BC4B0"/>
-      <path d="M170 540 C150 580 190 610 150 650 C130 670 140 685 120 700" stroke="#3B3F68" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.8"/>
-    </symbol>
-
-    <!-- Icon sprites -->
-    <symbol id="icon-home" viewBox="0 0 24 24">
-      <path d="M3 9.5L12 3l9 6.5V21H15v-5h-6v5H3V9.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-    </symbol>
-    <symbol id="icon-performance" viewBox="0 0 24 24">
-      <path d="M12 2L2 8l2 1.5V19h4v-5h8v5h4V9.5L22 8 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-      <path d="M8 14h8" stroke="currentColor" stroke-width="1.5"/>
-    </symbol>
-    <symbol id="icon-route" viewBox="0 0 24 24">
-      <circle cx="6" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      <circle cx="18" cy="6" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      <path d="M6 15.5C6 12 10 12 12 10s6-3.5 6-3.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="icon-org" viewBox="0 0 24 24">
-      <rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      <path d="M3 9h18M8 4V2M16 4V2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M7 13h3M7 17h3M14 13h3M14 17h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-    </symbol>
-    <symbol id="icon-gallery" viewBox="0 0 24 24">
-      <rect x="3" y="3" width="18" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      <circle cx="8.5" cy="8.5" r="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-      <path d="M3 16l5-5 4 4 3-3 6 6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-    </symbol>
-    <symbol id="icon-strava" viewBox="0 0 24 24">
-      <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0 5 13.828h4.172" fill="currentColor"/>
-    </symbol>
-    <symbol id="icon-chevron-right" viewBox="0 0 24 24">
-      <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </symbol>
-    <symbol id="icon-chevron-left" viewBox="0 0 24 24">
-      <path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </symbol>
-    <symbol id="icon-check" viewBox="0 0 24 24">
-      <path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </symbol>
-    <symbol id="icon-plus" viewBox="0 0 24 24">
-      <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="icon-settings" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" fill="none" stroke="currentColor" stroke-width="1.8"/>
-    </symbol>
-    <symbol id="icon-photo" viewBox="0 0 24 24">
-      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      <circle cx="12" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
-    </symbol>
-    <symbol id="icon-map-pin" viewBox="0 0 24 24">
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      <circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
-    </symbol>
-    <symbol id="icon-clock" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="icon-mountain" viewBox="0 0 24 24">
-      <path d="M3 20L9 8l4 6 3-4 5 10H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-    </symbol>
-    <symbol id="icon-sync" viewBox="0 0 24 24">
-      <path d="M23 4v6h-6M1 20v-6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </symbol>
-    <symbol id="icon-trash" viewBox="0 0 24 24">
-      <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </symbol>
-    <symbol id="icon-edit" viewBox="0 0 24 24">
-      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-    </symbol>
-    <symbol id="icon-back" viewBox="0 0 24 24">
-      <path d="M19 12H5M5 12l7-7M5 12l7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </symbol>
-    <symbol id="icon-warning" viewBox="0 0 24 24">
-      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      <path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </symbol>
   </defs>
 </svg>
 
-<!-- App shell -->
-<div id="app">
-  <!-- Background illustration -->
-  <div class="bg-illustration" id="bg-illustration" aria-hidden="true">
-    <svg class="bg-svg" id="bg-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice">
-      <use href="#scene-noc" id="bg-scene-use"/>
-    </svg>
-    <div class="bg-overlay"></div>
-  </div>
+<div class="app-bg">
+  <svg data-scene="rano" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice"><use href="#scene-rano" width="320" height="700"/></svg>
+  <svg data-scene="den" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice" hidden><use href="#scene-den" width="320" height="700"/></svg>
+  <svg data-scene="soumrak" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice" hidden><use href="#scene-soumrak" width="320" height="700"/></svg>
+  <svg data-scene="noc" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice" hidden><use href="#scene-noc" width="320" height="700"/></svg>
+</div>
+<div class="scrim-top"></div>
 
-  <!-- Screens -->
-  <main class="screens" id="screens">
+<div class="app-shell">
+  <header class="app-header">
+    <button class="icon-btn is-ghost" id="back-btn"><svg class="icon"><use href="#i-chevron-left"/></svg></button>
+    <div class="app-header__title" id="header-title">Solo Vltava</div>
+    <button class="icon-btn" id="settings-btn"><svg class="icon"><use href="#i-settings"/></svg></button>
+  </header>
+
+  <main class="app-main">
+
+    <!-- ONBOARDING -->
+    <section class="screen" id="screen-onboarding" hidden>
+      <div class="onb-illus"><svg viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice"><use href="#scene-rano" width="320" height="700"/></svg></div>
+      <div class="onb-body">
+        <div class="onb-title">Vítej v Solo Vltava</div>
+        <p class="onb-sub">Zadej základní údaje o závodě — odpočet a cíle se podle nich spočítají automaticky.</p>
+        <div class="form-stack">
+          <div class="field"><label>Název závodu</label><input id="ob-name" type="text" value="Vltava Run"></div>
+          <div class="field"><label>Datum startu</label><input id="ob-date" type="date"></div>
+          <div class="field"><label>Místo startu</label><input id="ob-location" type="text" placeholder="Kvilda"></div>
+          <div class="field"><label>Cílové km přípravy</label><input id="ob-target-km" type="number" value="1500"></div>
+          <div class="field"><label>Cílové výškové metry</label><input id="ob-target-elev" type="number" value="40000"></div>
+        </div>
+        <button class="cta-button" id="ob-submit">Uložit a začít</button>
+      </div>
+    </section>
 
     <!-- DASHBOARD -->
-    <section class="screen" id="screen-dashboard" data-screen="dashboard">
-      <div class="screen-header">
-        <div class="header-top">
-          <div class="greeting-area">
-            <span class="greeting-time font-mono" id="current-time">00:00</span>
-            <h2 class="greeting-name" id="greeting-name">Ahoj!</h2>
-          </div>
-          <button class="icon-btn" id="settings-btn" aria-label="Nastavení">
-            <svg><use href="#icon-settings"/></svg>
-          </button>
-        </div>
-        <div class="phase-badge" id="phase-badge"></div>
+    <section class="screen" id="screen-dashboard" hidden>
+      <div class="countdown-pill" id="dash-countdown-pill">
+        <svg class="icon" width="14" height="14"><use href="#i-mountain"/></svg>
+        <span id="dash-countdown">—</span>
+      </div>
+      <div class="greeting" id="dash-greeting">Ahoj!</div>
+      <p class="subline">Dnešní trénink se počítá.</p>
+
+      <div class="progress-card" id="dash-checklist-card" hidden>
+        <div class="progress-row"><span>Checklist · Běžec</span><span id="dash-cl-runner">0 %</span></div>
+        <div class="progress-track"><div class="progress-fill" id="dash-cl-runner-bar" style="width:0%"></div></div>
+        <div class="progress-row"><span>Checklist · Support</span><span id="dash-cl-support">0 %</span></div>
+        <div class="progress-track"><div class="progress-fill success" id="dash-cl-support-bar" style="width:0%"></div></div>
       </div>
 
-      <div class="screen-scroll">
-        <!-- Countdown card -->
-        <div class="glass-card countdown-card" id="countdown-card">
-          <div class="countdown-label">Do závodu zbývá</div>
-          <div class="countdown-numbers" id="countdown-numbers">
-            <div class="countdown-item">
-              <span class="countdown-val font-display" id="cd-days">–</span>
-              <span class="countdown-unit">dní</span>
-            </div>
-            <div class="countdown-sep">:</div>
-            <div class="countdown-item">
-              <span class="countdown-val font-display" id="cd-hours">–</span>
-              <span class="countdown-unit">hodin</span>
-            </div>
-          </div>
-          <div class="race-info" id="race-info">
-            <svg class="icon-sm"><use href="#icon-map-pin"/></svg>
-            <span id="race-location-dash">–</span>
-            <span class="sep">·</span>
-            <span id="race-date-dash">–</span>
-          </div>
-        </div>
+      <div class="kpi-grid">
+        <div class="kpi"><span class="kpi__value" id="dash-km">0</span><span class="kpi__label">km naběháno</span></div>
+        <div class="kpi"><span class="kpi__value" id="dash-elev">0</span><span class="kpi__label">m nastoupáno</span></div>
+        <div class="kpi"><span class="kpi__value" id="dash-segments">0/0</span><span class="kpi__label">úseků vyzkoušeno</span></div>
+        <div class="kpi"><span class="kpi__value" id="dash-trainings">0</span><span class="kpi__label">tréninků celkem</span></div>
+      </div>
 
-        <!-- KPI cards row -->
-        <div class="kpi-row" id="kpi-row">
-          <div class="kpi-card glass-card">
-            <span class="kpi-label">Celkem km</span>
-            <span class="kpi-value font-display" id="kpi-km">–</span>
-          </div>
-          <div class="kpi-card glass-card">
-            <span class="kpi-label">Převýšení</span>
-            <span class="kpi-value font-display" id="kpi-elev">–</span>
-          </div>
-          <div class="kpi-card glass-card">
-            <span class="kpi-label">Tréninků</span>
-            <span class="kpi-value font-display" id="kpi-trainings">–</span>
-          </div>
-        </div>
-
-        <!-- Progress bar -->
-        <div class="glass-card progress-card">
-          <div class="progress-header">
-            <span class="progress-label">Příprava trasy</span>
-            <span class="progress-pct font-display" id="route-progress-pct">0%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill teal" id="route-progress-bar" style="width: 0%"></div>
-          </div>
-          <div class="progress-sub" id="route-progress-sub">0 z 0 úseků vyzkoušeno</div>
-        </div>
-
-        <!-- Last activity -->
-        <div class="glass-card last-activity" id="last-activity-card">
-          <div class="last-activity-header">
-            <span class="section-label">Poslední aktivita</span>
-            <span class="last-activity-source font-mono" id="last-activity-source">–</span>
-          </div>
-          <div class="last-activity-row">
-            <div class="last-activity-stat">
-              <span class="la-val font-display" id="la-km">–</span>
-              <span class="la-unit">km celkem</span>
-            </div>
-            <div class="last-activity-stat">
-              <span class="la-val font-display" id="la-elev">–</span>
-              <span class="la-unit">m výšky</span>
-            </div>
-          </div>
-          <div class="last-activity-time font-mono" id="la-updated">Nikdy neaktualizováno</div>
-        </div>
-
-        <!-- Checklist quick preview (week-D phase) -->
-        <div class="glass-card checklist-preview" id="checklist-preview" style="display:none">
-          <div class="checklist-preview-header">
-            <span class="section-label">Checklist</span>
-            <button class="link-btn" data-nav="checklist">Zobrazit vše</button>
-          </div>
-          <div class="checklist-preview-bar">
-            <div class="progress-bar">
-              <div class="progress-fill teal" id="checklist-progress-fill" style="width: 0%"></div>
-            </div>
-            <span class="font-mono" id="checklist-progress-text">0 / 0</span>
-          </div>
-        </div>
+      <div class="card is-clickable" data-go="vykony">
+        <div class="card__icon"><svg class="icon"><use href="#i-activity"/></svg></div>
+        <div class="card__body"><div class="card__title">Moje výkony</div><div class="card__meta" id="dash-stats-meta">Zatím bez dat</div></div>
+        <svg class="icon" style="color:var(--chrome-text-faint)"><use href="#i-chevron-right"/></svg>
+      </div>
+      <div class="chip-row">
+        <button class="chip is-primary" data-go="vykony">Moje výkony</button>
+        <button class="chip" data-go="trasa">Mapa trasy</button>
       </div>
     </section>
 
-    <!-- PERFORMANCE -->
-    <section class="screen" id="screen-performance" data-screen="performance">
-      <div class="screen-header">
-        <h2 class="screen-title">Moje výkony</h2>
-        <div class="strava-badge" id="strava-badge">
-          <svg class="icon-strava"><use href="#icon-strava"/></svg>
-          <span class="strava-label" id="strava-badge-label">Strava</span>
-          <svg class="icon-sm sync-icon" id="strava-sync-icon"><use href="#icon-sync"/></svg>
+    <!-- MOJE VÝKONY -->
+    <section class="screen" id="screen-vykony" hidden>
+      <div class="stat-flip" id="statFlip">
+        <div class="stat-flip__inner" id="flipInner">
+          <div class="stat-face stat-face--front">
+            <div class="stat-face__top">
+              <span class="stat-face__eyebrow">Celkem naběháno</span>
+              <button class="sync-badge" id="syncBtn">
+                <svg class="icon" width="13" height="13"><use href="#i-sync"/></svg>
+                <span id="sync-label">Strava · nepřipojeno</span>
+              </button>
+            </div>
+            <div class="stat-face__mountain">
+              <svg viewBox="0 0 300 170" preserveAspectRatio="none">
+                <path d="M0,150 L55,70 L95,115 L145,40 L195,105 L235,65 L300,130 L300,170 L0,170 Z" fill="rgba(255,255,255,0.07)"/>
+                <defs><clipPath id="clipKm"><path d="M0,150 L55,70 L95,115 L145,40 L195,105 L235,65 L300,130 L300,170 L0,170 Z"/></clipPath></defs>
+                <g clip-path="url(#clipKm)"><rect class="fill-rect" id="fillKm" data-pct="0" x="0" y="0" width="300" height="170" fill="url(#gradFillTeal)"/></g>
+              </svg>
+            </div>
+            <div class="stat-face__value"><span class="stat-face__num" id="numKm" data-target="0">0</span><span class="stat-face__unit">km</span></div>
+            <div class="stat-face__fact" id="factKm">≈ — × délka Vltavy</div>
+          </div>
+          <div class="stat-face stat-face--back">
+            <div class="stat-face__top">
+              <span class="stat-face__eyebrow">Celkem nastoupáno</span>
+              <div class="edit-pencil" id="editElevBtn"><svg class="icon" width="14" height="14"><use href="#i-check"/></svg></div>
+            </div>
+            <div class="stat-face__mountain">
+              <svg viewBox="0 0 300 170" preserveAspectRatio="none">
+                <path d="M0,150 L55,70 L95,115 L145,40 L195,105 L235,65 L300,130 L300,170 L0,170 Z" fill="rgba(255,255,255,0.07)"/>
+                <defs><clipPath id="clipElev"><path d="M0,150 L55,70 L95,115 L145,40 L195,105 L235,65 L300,130 L300,170 L0,170 Z"/></clipPath></defs>
+                <g clip-path="url(#clipElev)"><rect class="fill-rect" id="fillElev" data-pct="0" x="0" y="0" width="300" height="170" fill="url(#gradFillCoral)"/></g>
+              </svg>
+            </div>
+            <div class="stat-face__value"><span class="stat-face__num" id="numElev" data-target="0">0</span><span class="stat-face__unit">m</span></div>
+            <div class="stat-face__fact" id="factElev">≈ — × výška Everestu</div>
+          </div>
         </div>
+        <button class="stat-flip__arrow stat-flip__arrow--left" id="arrowLeft">‹</button>
+        <button class="stat-flip__arrow stat-flip__arrow--right" id="arrowRight">›</button>
       </div>
+      <div class="stat-flip__dots" id="dots"><span class="is-active"></span><span></span></div>
+      <p class="hint">přejeď prstem nebo klepni na šipku</p>
 
-      <div class="screen-scroll">
-        <!-- Flip card -->
-        <div class="flip-card-wrapper" id="flip-card-wrapper">
-          <div class="flip-card" id="flip-card">
-            <!-- Front: KM -->
-            <div class="flip-face flip-front">
-              <div class="flip-card-inner glass-card">
-                <div class="flip-face-header">
-                  <span class="flip-eyebrow">Celkem naběháno</span>
-                </div>
-                <div class="flip-mountain-wrap">
-                  <svg viewBox="0 0 300 160" preserveAspectRatio="none" class="flip-mountain-svg" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="mountain-grad-km" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#6FE0D2"/>
-                        <stop offset="100%" stop-color="#1A8A7F"/>
-                      </linearGradient>
-                      <clipPath id="mountain-clip-km">
-                        <path d="M0,140 L55,58 L95,102 L145,28 L195,92 L237,54 L300,118 L300,160 L0,160 Z"/>
-                      </clipPath>
-                    </defs>
-                    <path d="M0,140 L55,58 L95,102 L145,28 L195,92 L237,54 L300,118 L300,160 L0,160 Z" fill="rgba(255,255,255,0.06)"/>
-                    <g clip-path="url(#mountain-clip-km)">
-                      <rect id="mountain-fill-km" x="0" y="0" width="300" height="160" fill="url(#mountain-grad-km)" style="transform-origin: center bottom; transform-box: fill-box; transform: scaleY(0); opacity: 0.85;"/>
-                    </g>
-                    <polygon points="47,70 55,58 63,70" fill="rgba(255,255,255,0.8)"/>
-                    <polygon points="137,40 145,28 153,40" fill="rgba(255,255,255,0.8)"/>
-                    <polygon points="229,66 237,54 245,66" fill="rgba(255,255,255,0.8)"/>
-                    <text id="mountain-pct-km" x="150" y="112" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Baloo 2" font-size="26" font-weight="800">0%</text>
-                  </svg>
-                </div>
-                <div class="flip-value-section">
-                  <div class="flip-number-row">
-                    <span class="flip-number font-display" id="flip-km">0</span>
-                    <span class="flip-unit">km</span>
-                  </div>
-                  <div class="flip-target font-mono" id="flip-km-target">cíl: 375 km</div>
-                  <div class="flip-comparison font-mono" id="flip-km-comparison">≈ 0× délka Vltavy</div>
-                </div>
-              </div>
-            </div>
-            <!-- Back: Elevation -->
-            <div class="flip-face flip-back">
-              <div class="flip-card-inner glass-card">
-                <div class="flip-face-header">
-                  <span class="flip-eyebrow">Celkem nastoupáno</span>
-                </div>
-                <div class="flip-mountain-wrap">
-                  <svg viewBox="0 0 300 160" preserveAspectRatio="none" class="flip-mountain-svg" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="mountain-grad-elev" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#FFC79A"/>
-                        <stop offset="100%" stop-color="#C04A20"/>
-                      </linearGradient>
-                      <clipPath id="mountain-clip-elev">
-                        <path d="M0,140 L55,58 L95,102 L145,28 L195,92 L237,54 L300,118 L300,160 L0,160 Z"/>
-                      </clipPath>
-                    </defs>
-                    <path d="M0,140 L55,58 L95,102 L145,28 L195,92 L237,54 L300,118 L300,160 L0,160 Z" fill="rgba(255,255,255,0.06)"/>
-                    <g clip-path="url(#mountain-clip-elev)">
-                      <rect id="mountain-fill-elev" x="0" y="0" width="300" height="160" fill="url(#mountain-grad-elev)" style="transform-origin: center bottom; transform-box: fill-box; transform: scaleY(0); opacity: 0.85;"/>
-                    </g>
-                    <polygon points="47,70 55,58 63,70" fill="rgba(255,255,255,0.8)"/>
-                    <polygon points="137,40 145,28 153,40" fill="rgba(255,255,255,0.8)"/>
-                    <polygon points="229,66 237,54 245,66" fill="rgba(255,255,255,0.8)"/>
-                    <text id="mountain-pct-elev" x="150" y="112" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Baloo 2" font-size="26" font-weight="800">0%</text>
-                  </svg>
-                </div>
-                <div class="flip-value-section">
-                  <div class="flip-number-row">
-                    <span class="flip-number font-display" id="flip-elev">0</span>
-                    <span class="flip-unit">m</span>
-                  </div>
-                  <div class="flip-target font-mono" id="flip-elev-target">cíl: 10 000 m</div>
-                  <div class="flip-comparison font-mono" id="flip-elev-comparison">≈ 0× výška Everestu</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Flip navigation -->
-          <div class="flip-nav">
-            <button class="flip-arrow" id="flip-prev" aria-label="Předchozí">
-              <svg><use href="#icon-chevron-left"/></svg>
-            </button>
-            <div class="flip-dots">
-              <div class="flip-dot active" data-side="0"></div>
-              <div class="flip-dot" data-side="1"></div>
-            </div>
-            <button class="flip-arrow" id="flip-next" aria-label="Další">
-              <svg><use href="#icon-chevron-right"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Sync / Strava section -->
-        <div class="glass-card strava-section" id="strava-section">
-          <div class="strava-section-header">
-            <div class="strava-header-left">
-              <svg class="icon-strava-lg"><use href="#icon-strava"/></svg>
-              <div>
-                <div class="strava-title">Strava</div>
-                <div class="strava-sub font-mono" id="strava-status-text">Nepřipojeno</div>
-              </div>
-            </div>
-            <button class="btn-strava" id="strava-connect-btn">Připojit</button>
-          </div>
-          <p class="strava-desc" id="strava-desc">Připoj svůj Strava účet pro automatickou synchronizaci tréninků.</p>
-        </div>
-
-        <!-- Manual entry -->
-        <div class="glass-card manual-section">
-          <div class="manual-header">
-            <span class="section-label">Ruční zadání</span>
-          </div>
-          <form id="manual-stats-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Celkem km</label>
-                <input type="number" class="form-input" id="manual-km" placeholder="0" min="0" step="0.1">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Převýšení m</label>
-                <input type="number" class="form-input" id="manual-elev" placeholder="0" min="0">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Tréninků</label>
-                <input type="number" class="form-input" id="manual-trainings" placeholder="0" min="0">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Nejdelší běh km</label>
-                <input type="number" class="form-input" id="manual-longest" placeholder="0" min="0" step="0.1">
-              </div>
-            </div>
-            <button type="submit" class="btn-primary btn-full">Uložit</button>
-          </form>
-        </div>
+      <div class="card is-clickable" id="editKmRow">
+        <div class="card__icon"><svg class="icon"><use href="#i-mountain"/></svg></div>
+        <div class="card__body"><div class="card__title">Upravit km ručně</div></div>
+        <div class="edit-pencil"><svg class="icon" width="14" height="14"><use href="#i-check"/></svg></div>
       </div>
+      <div class="card is-clickable" id="editTrainingsRow">
+        <div class="card__icon" style="background:var(--warm-soft);color:var(--warm)"><svg class="icon"><use href="#i-calendar"/></svg></div>
+        <div class="card__body"><div class="card__title">Počet tréninků</div></div>
+        <div class="card__value" id="numTrainings">0</div>
+        <div class="edit-pencil"><svg class="icon" width="14" height="14"><use href="#i-check"/></svg></div>
+      </div>
+      <button class="cta-button is-secondary" id="stravaConnectBtn">Připojit Strava</button>
+      <div class="note-block">Bez propojení na Strava lze čísla kdykoliv upravit ručně.</div>
     </section>
 
-    <!-- ROUTE -->
-    <section class="screen" id="screen-route" data-screen="route">
-      <div class="screen-header">
-        <h2 class="screen-title">Trasa</h2>
-        <button class="icon-btn" id="add-segment-btn" aria-label="Přidat úsek">
-          <svg><use href="#icon-plus"/></svg>
-        </button>
-      </div>
-
-      <div class="screen-scroll">
-        <!-- Route stats -->
-        <div class="glass-card route-stats-card">
-          <div class="route-stat">
-            <span class="route-stat-val font-display" id="route-stat-total">0</span>
-            <span class="route-stat-label">úseků</span>
-          </div>
-          <div class="route-stat">
-            <span class="route-stat-val font-display teal" id="route-stat-tried">0</span>
-            <span class="route-stat-label">vyzkoušeno</span>
-          </div>
-          <div class="route-progress-ring">
-            <svg viewBox="0 0 60 60" class="ring-svg">
-              <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
-              <circle cx="30" cy="30" r="24" fill="none" stroke="#2BC4B0" stroke-width="4" stroke-dasharray="150.8" stroke-dashoffset="150.8" id="route-ring" stroke-linecap="round" transform="rotate(-90 30 30)"/>
-            </svg>
-            <span class="ring-pct font-display" id="route-ring-pct">0%</span>
-          </div>
-        </div>
-
-        <!-- Filter pills -->
-        <div class="filter-pills">
-          <button class="filter-pill active" data-filter="all">Všechny</button>
-          <button class="filter-pill" data-filter="tried">Vyzkoušeno</button>
-          <button class="filter-pill" data-filter="untried">Zbývá</button>
-        </div>
-
-        <!-- Segments list -->
-        <div class="segments-list" id="segments-list">
-          <div class="empty-state" id="segments-empty">
-            <svg class="icon-lg"><use href="#icon-mountain"/></svg>
-            <p>Zatím žádné úseky.<br>Přidej první úsek trasy.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Add segment modal -->
-      <div class="modal" id="add-segment-modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-sheet glass-card">
-          <div class="modal-header">
-            <h3 class="modal-title">Nový úsek</h3>
-            <button class="modal-close" data-close="add-segment-modal">✕</button>
-          </div>
-          <form id="add-segment-form">
-            <div class="form-group">
-              <label class="form-label">Název</label>
-              <input type="text" class="form-input" id="seg-name" required placeholder="Lipno – Vyšší Brod">
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Délka km</label>
-                <input type="number" class="form-input" id="seg-distance" step="0.1" min="0" placeholder="12.5">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Stoupání m</label>
-                <input type="number" class="form-input" id="seg-elev-gain" min="0" placeholder="320">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Klesání m</label>
-                <input type="number" class="form-input" id="seg-elev-loss" min="0" placeholder="280">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Obtížnost 1–5</label>
-                <input type="number" class="form-input" id="seg-difficulty" min="1" max="5" placeholder="3">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Povrch</label>
-              <select class="form-input" id="seg-surface">
-                <option value="trail">Trail</option>
-                <option value="road">Silnice</option>
-                <option value="gravel">Gravel</option>
-                <option value="mixed">Smíšený</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Poznámka</label>
-              <textarea class="form-input" id="seg-notes" rows="2" placeholder="Náročný výstup, studánka na vrcholu..."></textarea>
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="btn-secondary" data-close="add-segment-modal">Zrušit</button>
-              <button type="submit" class="btn-primary">Přidat</button>
-            </div>
-          </form>
-        </div>
-      </div>
+    <!-- TRASA -->
+    <section class="screen" id="screen-trasa" hidden>
+      <div class="section-title" id="trasa-summary">0/0 úseků vyzkoušeno</div>
+      <div id="trasa-list" class="form-stack"></div>
     </section>
 
-    <!-- SEGMENT DETAIL -->
-    <section class="screen" id="screen-segment-detail" data-screen="segment-detail">
-      <div class="screen-header">
-        <button class="icon-btn" id="segment-back-btn" aria-label="Zpět">
-          <svg><use href="#icon-back"/></svg>
-        </button>
-        <h2 class="screen-title" id="segment-detail-title">Úsek</h2>
-        <button class="icon-btn" id="segment-edit-btn" aria-label="Upravit">
-          <svg><use href="#icon-edit"/></svg>
-        </button>
-      </div>
-
-      <div class="screen-scroll" id="segment-detail-content">
-        <!-- Filled dynamically -->
-      </div>
+    <!-- DETAIL ÚSEKU -->
+    <section class="screen" id="screen-segment" hidden>
+      <div id="segment-detail" class="form-stack"></div>
     </section>
 
-    <!-- ORGANIZATION HUB -->
-    <section class="screen" id="screen-organization" data-screen="organization">
-      <div class="screen-header">
-        <h2 class="screen-title">Organizace</h2>
+    <!-- ORGANIZACE -->
+    <section class="screen" id="screen-organizace" hidden>
+      <div class="card is-clickable" data-go="checklist">
+        <div class="card__icon"><svg class="icon"><use href="#i-check"/></svg></div>
+        <div class="card__body"><div class="card__title">Checklist</div><div class="card__meta">Vybavení běžce a supportu</div></div>
+        <svg class="icon" style="color:var(--chrome-text-faint)"><use href="#i-chevron-right"/></svg>
       </div>
-
-      <div class="screen-scroll">
-        <div class="org-grid">
-          <button class="org-tile glass-card" data-nav="schedule">
-            <svg class="org-tile-icon"><use href="#icon-clock"/></svg>
-            <span class="org-tile-label">Harmonogram</span>
-          </button>
-          <button class="org-tile glass-card" data-nav="checklist">
-            <svg class="org-tile-icon"><use href="#icon-check"/></svg>
-            <span class="org-tile-label">Checklist</span>
-          </button>
-          <button class="org-tile glass-card" data-nav="accommodations">
-            <span class="org-tile-emoji">🏨</span>
-            <span class="org-tile-label">Ubytování</span>
-          </button>
-          <button class="org-tile glass-card" data-nav="reservations">
-            <span class="org-tile-emoji">🎫</span>
-            <span class="org-tile-label">Rezervace</span>
-          </button>
-          <button class="org-tile glass-card" data-nav="contacts">
-            <span class="org-tile-emoji">📞</span>
-            <span class="org-tile-label">Kontakty</span>
-          </button>
-          <button class="org-tile glass-card" data-nav="weather">
-            <span class="org-tile-emoji">🌤</span>
-            <span class="org-tile-label">Počasí</span>
-            <span class="org-tile-badge">V2</span>
-          </button>
-        </div>
+      <div class="card is-clickable" data-go="kontakty">
+        <div class="card__icon" style="background:var(--warm-soft);color:var(--warm)"><svg class="icon"><use href="#i-pin"/></svg></div>
+        <div class="card__body"><div class="card__title">Kontakty</div><div class="card__meta">Důležitá telefonní čísla</div></div>
+        <svg class="icon" style="color:var(--chrome-text-faint)"><use href="#i-chevron-right"/></svg>
       </div>
-    </section>
-
-    <!-- SCHEDULE -->
-    <section class="screen" id="screen-schedule" data-screen="schedule">
-      <div class="screen-header">
-        <button class="icon-btn" data-back aria-label="Zpět">
-          <svg><use href="#icon-back"/></svg>
-        </button>
-        <h2 class="screen-title">Harmonogram</h2>
-        <button class="icon-btn" id="add-schedule-btn" aria-label="Přidat">
-          <svg><use href="#icon-plus"/></svg>
-        </button>
+      <div class="card">
+        <div class="card__icon" style="background:var(--success-soft);color:var(--success)"><svg class="icon"><use href="#i-calendar"/></svg></div>
+        <div class="card__body"><div class="card__title">Harmonogram</div><div class="card__meta">Brzy přidáme</div></div>
       </div>
-      <div class="screen-scroll">
-        <div class="timeline" id="schedule-timeline">
-          <div class="empty-state" id="schedule-empty">
-            <svg class="icon-lg"><use href="#icon-clock"/></svg>
-            <p>Zatím žádné položky.<br>Přidej první bod harmonogramu.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal" id="add-schedule-modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-sheet glass-card">
-          <div class="modal-header">
-            <h3 class="modal-title">Nová položka</h3>
-            <button class="modal-close" data-close="add-schedule-modal">✕</button>
-          </div>
-          <form id="add-schedule-form">
-            <div class="form-group">
-              <label class="form-label">Název</label>
-              <input type="text" class="form-input" id="sch-title" required placeholder="Start závodu">
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Začátek</label>
-                <input type="datetime-local" class="form-input" id="sch-start">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Konec</label>
-                <input type="datetime-local" class="form-input" id="sch-end">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Místo</label>
-              <input type="text" class="form-input" id="sch-location" placeholder="Lipno nad Vltavou">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Kategorie</label>
-              <select class="form-input" id="sch-category">
-                <option value="race">Závod</option>
-                <option value="travel">Cestování</option>
-                <option value="accommodation">Ubytování</option>
-                <option value="prep">Příprava</option>
-                <option value="other">Ostatní</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Poznámka</label>
-              <textarea class="form-input" id="sch-notes" rows="2"></textarea>
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="btn-secondary" data-close="add-schedule-modal">Zrušit</button>
-              <button type="submit" class="btn-primary">Přidat</button>
-            </div>
-          </form>
-        </div>
+      <div class="card">
+        <div class="card__icon" style="background:var(--success-soft);color:var(--success)"><svg class="icon"><use href="#i-pin"/></svg></div>
+        <div class="card__body"><div class="card__title">Ubytování a rezervace</div><div class="card__meta">Brzy přidáme</div></div>
       </div>
     </section>
 
     <!-- CHECKLIST -->
-    <section class="screen" id="screen-checklist" data-screen="checklist">
-      <div class="screen-header">
-        <button class="icon-btn" data-back aria-label="Zpět">
-          <svg><use href="#icon-back"/></svg>
-        </button>
-        <h2 class="screen-title">Checklist</h2>
-        <button class="icon-btn" id="add-checklist-cat-btn" aria-label="Přidat kategorii">
-          <svg><use href="#icon-plus"/></svg>
-        </button>
+    <section class="screen" id="screen-checklist" hidden>
+      <div class="segmented" id="checklist-tabs">
+        <button data-owner="runner" class="is-active">Běžec</button>
+        <button data-owner="support">Support</button>
       </div>
-
-      <div class="screen-scroll">
-        <!-- Role tabs -->
-        <div class="tab-bar">
-          <button class="tab-btn active" data-tab="runner">Běžec</button>
-          <button class="tab-btn" data-tab="support">Support</button>
-          <button class="tab-btn" data-tab="shared">Společné</button>
-        </div>
-
-        <!-- Progress -->
-        <div class="glass-card checklist-header-card">
-          <div class="checklist-progress-wrap">
-            <div class="checklist-ring-wrap">
-              <svg viewBox="0 0 80 80" class="checklist-ring" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="32" class="checklist-ring-track"/>
-                <circle cx="40" cy="40" r="32" class="checklist-ring-fill" id="checklist-ring-fill"/>
-              </svg>
-              <span class="checklist-ring-pct" id="checklist-total-pct">0%</span>
-            </div>
-            <div class="checklist-progress-text">
-              <span class="checklist-progress-title">Vybaveno</span>
-              <span class="checklist-progress-sub" id="checklist-items-count">0 / 0 položek</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="checklist-content" id="checklist-content">
-          <div class="empty-state" id="checklist-empty">
-            <svg class="icon-lg"><use href="#icon-check"/></svg>
-            <p>Zatím žádné položky.<br>Přidej kategorii a položky.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Add category modal -->
-      <div class="modal" id="add-cat-modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-sheet glass-card">
-          <div class="modal-header">
-            <h3 class="modal-title">Nová kategorie</h3>
-            <button class="modal-close" data-close="add-cat-modal">✕</button>
-          </div>
-          <form id="add-cat-form">
-            <div class="form-group">
-              <label class="form-label">Název kategorie</label>
-              <input type="text" class="form-input" id="cat-name" required placeholder="Oblečení">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Pro koho</label>
-              <div class="role-selector">
-                <button type="button" class="role-btn active" data-role="runner">Běžec</button>
-                <button type="button" class="role-btn" data-role="support">Support</button>
-                <button type="button" class="role-btn" data-role="shared">Společné</button>
-              </div>
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="btn-secondary" data-close="add-cat-modal">Zrušit</button>
-              <button type="submit" class="btn-primary">Přidat</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <div id="checklist-content" class="form-stack"></div>
+      <button class="cta-button is-secondary" id="addChecklistItemBtn">+ Přidat položku</button>
     </section>
 
-    <!-- ACCOMMODATIONS -->
-    <section class="screen" id="screen-accommodations" data-screen="accommodations">
-      <div class="screen-header">
-        <button class="icon-btn" data-back aria-label="Zpět">
-          <svg><use href="#icon-back"/></svg>
-        </button>
-        <h2 class="screen-title">Ubytování</h2>
-        <button class="icon-btn" id="add-accomm-btn" aria-label="Přidat">
-          <svg><use href="#icon-plus"/></svg>
-        </button>
-      </div>
-      <div class="screen-scroll">
-        <div class="list-cards" id="accommodations-list">
-          <div class="empty-state" id="accommodations-empty">
-            <span style="font-size:2.5rem">🏨</span>
-            <p>Zatím žádné ubytování.</p>
-          </div>
-        </div>
-      </div>
-      <div class="modal" id="add-accomm-modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-sheet glass-card">
-          <div class="modal-header">
-            <h3 class="modal-title">Nové ubytování</h3>
-            <button class="modal-close" data-close="add-accomm-modal">✕</button>
-          </div>
-          <form id="add-accomm-form">
-            <div class="form-group">
-              <label class="form-label">Název</label>
-              <input type="text" class="form-input" id="acc-name" required placeholder="Hotel U Vltavy">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Adresa</label>
-              <input type="text" class="form-input" id="acc-address" placeholder="Lipno nad Vltavou 1">
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Check-in</label>
-                <input type="date" class="form-input" id="acc-checkin">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Check-out</label>
-                <input type="date" class="form-input" id="acc-checkout">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Číslo rezervace</label>
-                <input type="text" class="form-input" id="acc-booking" placeholder="BK123456">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Cena</label>
-                <input type="text" class="form-input" id="acc-price" placeholder="1200 Kč">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Poznámka</label>
-              <textarea class="form-input" id="acc-notes" rows="2"></textarea>
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="btn-secondary" data-close="add-accomm-modal">Zrušit</button>
-              <button type="submit" class="btn-primary">Uložit</button>
-            </div>
-          </form>
-        </div>
-      </div>
+    <!-- KONTAKTY -->
+    <section class="screen" id="screen-kontakty" hidden>
+      <div id="contacts-list" class="form-stack"></div>
+      <button class="cta-button is-secondary" id="addContactBtn">+ Přidat kontakt</button>
     </section>
 
-    <!-- CONTACTS -->
-    <section class="screen" id="screen-contacts" data-screen="contacts">
-      <div class="screen-header">
-        <button class="icon-btn" data-back aria-label="Zpět">
-          <svg><use href="#icon-back"/></svg>
-        </button>
-        <h2 class="screen-title">Kontakty</h2>
-        <button class="icon-btn" id="add-contact-btn" aria-label="Přidat">
-          <svg><use href="#icon-plus"/></svg>
-        </button>
-      </div>
-      <div class="screen-scroll">
-        <div class="list-cards" id="contacts-list">
-          <div class="empty-state" id="contacts-empty">
-            <span style="font-size:2.5rem">📞</span>
-            <p>Zatím žádné kontakty.</p>
-          </div>
-        </div>
-      </div>
-      <div class="modal" id="add-contact-modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-sheet glass-card">
-          <div class="modal-header">
-            <h3 class="modal-title">Nový kontakt</h3>
-            <button class="modal-close" data-close="add-contact-modal">✕</button>
-          </div>
-          <form id="add-contact-form">
-            <div class="form-group">
-              <label class="form-label">Jméno</label>
-              <input type="text" class="form-input" id="con-name" required placeholder="Jan Novák">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Role / popis</label>
-              <input type="text" class="form-input" id="con-role" placeholder="Organizátor, doktor, atd.">
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Telefon</label>
-                <input type="tel" class="form-input" id="con-phone" placeholder="+420 123 456 789">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-input" id="con-email" placeholder="jan@example.cz">
-              </div>
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="btn-secondary" data-close="add-contact-modal">Zrušit</button>
-              <button type="submit" class="btn-primary">Uložit</button>
-            </div>
-          </form>
-        </div>
-      </div>
+    <!-- GALERIE -->
+    <section class="screen" id="screen-galerie" hidden>
+      <div class="empty-state">Galerie fotek se připravuje.</div>
     </section>
 
-    <!-- RESERVATIONS -->
-    <section class="screen" id="screen-reservations" data-screen="reservations">
-      <div class="screen-header">
-        <button class="icon-btn" data-back aria-label="Zpět">
-          <svg><use href="#icon-back"/></svg>
-        </button>
-        <h2 class="screen-title">Rezervace</h2>
-        <button class="icon-btn" id="add-reservation-btn" aria-label="Přidat">
-          <svg><use href="#icon-plus"/></svg>
-        </button>
+    <!-- KRONIKA -->
+    <section class="screen" id="screen-kronika" hidden>
+      <div class="countdown-pill"><span>Cíl · Vltava Run</span></div>
+      <div class="kpi-grid">
+        <div class="kpi"><span class="kpi__value" id="kr-km">0</span><span class="kpi__label">km za přípravu</span></div>
+        <div class="kpi"><span class="kpi__value" id="kr-trainings">0</span><span class="kpi__label">tréninků</span></div>
       </div>
-      <div class="screen-scroll">
-        <div class="list-cards" id="reservations-list">
-          <div class="empty-state" id="reservations-empty">
-            <span style="font-size:2.5rem">🎫</span>
-            <p>Zatím žádné rezervace.<br>Přidej první rezervaci.</p>
-          </div>
-        </div>
-      </div>
-      <div class="modal" id="add-reservation-modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-sheet glass-card">
-          <div class="modal-header">
-            <h3 class="modal-title">Nová rezervace</h3>
-            <button class="modal-close" data-close="add-reservation-modal">✕</button>
-          </div>
-          <form id="add-reservation-form">
-            <div class="form-group">
-              <label class="form-label">Typ</label>
-              <select class="form-input" id="res-type">
-                <option value="transport">🚗 Doprava</option>
-                <option value="accommodation">🏨 Ubytování</option>
-                <option value="restaurant">🍽️ Restaurace</option>
-                <option value="race">🏁 Závod</option>
-                <option value="other">🎫 Ostatní</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Název</label>
-              <input type="text" class="form-input" id="res-name" required placeholder="Vlak Praha – Lipno">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Datum a čas</label>
-              <input type="datetime-local" class="form-input" id="res-datetime">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Číslo potvrzení</label>
-              <input type="text" class="form-input" id="res-confirmation" placeholder="ABC123">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Poznámka</label>
-              <textarea class="form-input" id="res-notes" rows="2"></textarea>
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="btn-secondary" data-close="add-reservation-modal">Zrušit</button>
-              <button type="submit" class="btn-primary">Uložit</button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <button class="cta-button" disabled>Exportovat kroniku jako PDF (brzy)</button>
     </section>
 
-    <!-- WEATHER (V2) -->
-    <section class="screen" id="screen-weather" data-screen="weather">
-      <div class="screen-header">
-        <button class="icon-btn" data-back aria-label="Zpět">
-          <svg><use href="#icon-back"/></svg>
-        </button>
-        <h2 class="screen-title">Počasí</h2>
+    <!-- NASTAVENÍ -->
+    <section class="screen" id="screen-nastaveni" hidden>
+      <div class="toggle-card">
+        <div><div class="toggle-card__label">Světlý režim</div><div class="toggle-card__sub">Výchozí je tmavý</div></div>
+        <div class="switch" id="theme-switch"></div>
       </div>
-      <div class="screen-scroll">
-        <div class="glass-card" style="padding:32px 24px;text-align:center;margin-top:16px">
-          <div style="font-size:3rem;margin-bottom:16px">🌤</div>
-          <div style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;margin-bottom:10px">Počasí — verze 2</div>
-          <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.65">
-            Předpověď počasí pro jednotlivé úseky trasy bude dostupná v příští verzi appky.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section class="screen" id="screen-gallery" data-screen="gallery">
-      <div class="screen-header">
-        <h2 class="screen-title">Galerie</h2>
-        <button class="icon-btn" id="upload-photo-btn" aria-label="Přidat foto">
-          <svg><use href="#icon-photo"/></svg>
-        </button>
-      </div>
-      <div class="screen-scroll">
-        <div class="filter-pills">
-          <button class="filter-pill active" data-filter="all">Vše</button>
-          <button class="filter-pill" data-filter="segment">Trasa</button>
-          <button class="filter-pill" data-filter="race">Závod</button>
-          <button class="filter-pill" data-filter="free">Ostatní</button>
-        </div>
-        <div class="photo-grid" id="photo-grid">
-          <div class="empty-state" id="gallery-empty" style="grid-column:1/-1">
-            <svg class="icon-lg"><use href="#icon-photo"/></svg>
-            <p>Zatím žádné fotky.<br>Přidej první fotografii.</p>
-          </div>
-        </div>
-        <input type="file" id="photo-input" accept="image/*" multiple style="display:none">
-      </div>
-    </section>
-
-    <!-- SETTINGS -->
-    <section class="screen" id="screen-settings" data-screen="settings">
-      <div class="screen-header">
-        <button class="icon-btn" data-back aria-label="Zpět">
-          <svg><use href="#icon-back"/></svg>
-        </button>
-        <h2 class="screen-title">Nastavení</h2>
-      </div>
-      <div class="screen-scroll">
-        <div class="settings-section glass-card">
-          <div class="settings-title">Kdo jsem</div>
-          <div class="settings-row" style="flex-direction:column;align-items:stretch;gap:10px">
-            <input type="text" class="form-input" id="profile-name-input" placeholder="Vojtěch">
-            <div class="role-selector">
-              <button type="button" class="role-btn active" id="profile-role-runner">
-                <span class="role-icon">🏃</span>
-                <span>Běžec</span>
-              </button>
-              <button type="button" class="role-btn" id="profile-role-support">
-                <span class="role-icon">💙</span>
-                <span>Support</span>
-              </button>
-            </div>
-            <button class="btn-primary" id="save-profile-btn">Uložit</button>
-          </div>
-        </div>
-
-        <div class="settings-section glass-card">
-          <div class="settings-title">Vzhled</div>
-          <div class="settings-row">
-            <span class="settings-label">Tmavý režim</span>
-            <label class="toggle">
-              <input type="checkbox" id="theme-toggle" checked>
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="settings-row">
-            <span class="settings-label">Jednotky vzdálenosti</span>
-            <div class="seg-control">
-              <button class="seg-btn active" data-unit="km">km</button>
-              <button class="seg-btn" data-unit="mi">mi</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="settings-section glass-card">
-          <div class="settings-title">Strava</div>
-          <div class="settings-row" id="strava-settings-row">
-            <div>
-              <span class="settings-label">Strava</span>
-              <span class="settings-sub font-mono" id="strava-settings-status">Nepřipojeno</span>
-            </div>
-            <button class="btn-secondary btn-sm" id="strava-settings-btn">Připojit</button>
-          </div>
-        </div>
-
-        <div class="settings-section glass-card">
-          <div class="settings-title">Informace o appce</div>
-          <div class="settings-row">
-            <span class="settings-label">Verze</span>
-            <span class="settings-val font-mono">1.0.0</span>
-          </div>
-          <div class="settings-row">
-            <span class="settings-label">Firebase projekt</span>
-            <span class="settings-val font-mono" id="firebase-project-id">–</span>
-          </div>
-        </div>
-
-        <div class="settings-section glass-card">
-          <div class="settings-title danger-zone">Nebezpečná zóna</div>
-          <button class="btn-danger btn-full" id="reset-app-btn">Obnovit tovární nastavení</button>
-        </div>
+      <div class="card">
+        <div class="card__body"><div class="card__title">Solo Vltava</div><div class="card__meta">v1.0 · PWA pro dva</div></div>
       </div>
     </section>
 
   </main>
 
-  <!-- Bottom navigation (reference tabbar) -->
-  <nav class="tabbar" id="bottom-nav">
-    <button class="tabbar__item is-active" data-nav="dashboard" aria-label="Domů">
-      <div class="tabbar__icon-wrap"><svg class="icon"><use href="#icon-home"/></svg></div>
-    </button>
-    <button class="tabbar__item" data-nav="performance" aria-label="Výkony">
-      <div class="tabbar__icon-wrap"><svg class="icon"><use href="#icon-mountain"/></svg></div>
-    </button>
-    <button class="tabbar__item" data-nav="route" aria-label="Trasa">
-      <div class="tabbar__icon-wrap"><svg class="icon"><use href="#icon-route"/></svg></div>
-    </button>
-    <button class="tabbar__item" data-nav="organization" aria-label="Organizace">
-      <div class="tabbar__icon-wrap"><svg class="icon"><use href="#icon-org"/></svg></div>
-    </button>
-    <button class="tabbar__item" data-nav="gallery" aria-label="Galerie">
-      <div class="tabbar__icon-wrap"><svg class="icon"><use href="#icon-gallery"/></svg></div>
-    </button>
+  <button class="fab" id="fab" hidden><svg class="icon" style="color:#0E2420"><use href="#i-plus"/></svg></button>
+
+  <nav class="tabbar">
+    <div class="tabbar__item is-active" data-nav="dashboard"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-home"/></svg></div></div>
+    <div class="tabbar__item" data-nav="vykony"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div></div>
+    <div class="tabbar__item" data-nav="trasa"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-mountain"/></svg></div></div>
+    <div class="tabbar__item" data-nav="organizace"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-calendar"/></svg></div></div>
+    <div class="tabbar__item" data-nav="galerie"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-gallery"/></svg></div></div>
   </nav>
-
-  <!-- Loading overlay -->
-  <div class="loading-overlay" id="loading-overlay">
-    <div class="loading-spinner">
-      <svg viewBox="0 0 50 50" class="spinner-svg">
-        <circle cx="25" cy="25" r="20" fill="none" stroke="#2BC4B0" stroke-width="4" stroke-dasharray="100" stroke-dashoffset="75" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div class="loading-text font-mono">Načítám…</div>
-  </div>
-
-  <!-- Toast notifications -->
-  <div class="toast-container" id="toast-container"></div>
-
 </div>
 
-<!-- Firebase SDKs -->
+<div class="toast" id="toast"></div>
+
 <script type="module" src="js/app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+  }
+</script>
 </body>
 </html>
