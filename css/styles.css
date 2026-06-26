@@ -81,8 +81,8 @@ svg.icon{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stro
   color:var(--chrome-text-dim);
   transition:opacity .2s;
 }
-/* Ghost = hidden but keeps layout space */
-.icon-btn.is-ghost{visibility:hidden;pointer-events:none;}
+/* Ghost = removed from layout (title snaps left on root screens) */
+.icon-btn.is-ghost{display:none;}
 
 /* ── Top scrim ── */
 .scrim-top{
@@ -188,6 +188,90 @@ main.app-main{
 }
 .kpi__value{font-family:var(--font-display);font-weight:700;font-size:21px;display:block;color:var(--chrome-text);}
 .kpi__label{font-size:11.5px;color:var(--chrome-text-dim);display:block;margin-top:3px;}
+
+/* ── Vltava card (dashboard) ── */
+.vltava-card{
+  background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--chrome-border);border-radius:var(--radius-md);
+  padding:16px 16px 14px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.vltava-card__header{
+  display:flex;align-items:center;gap:16px;
+}
+.vltava-card__sep{
+  width:1px;height:44px;background:var(--chrome-border);flex-shrink:0;
+}
+.vltava-stat{flex:1;}
+.vltava-stat__row{display:flex;align-items:flex-end;gap:5px;line-height:1;}
+.vltava-stat__num{
+  font-family:var(--font-display);font-weight:800;font-size:30px;
+  color:var(--chrome-text);line-height:1;
+}
+.vltava-stat__unit{
+  font-family:var(--font-display);font-weight:700;font-size:14px;
+  color:var(--chrome-text-dim);margin-bottom:3px;
+}
+.vltava-stat__label{
+  font-size:12px;color:var(--chrome-text-dim);margin-top:4px;display:block;
+}
+.vltava-map-wrap{width:100%;}
+.vltava-map{width:100%;height:auto;display:block;}
+.vltava-progress-label{
+  text-align:center;
+  font-family:var(--font-display);font-weight:700;font-size:13px;
+  color:var(--accent);letter-spacing:.01em;
+}
+
+/* ── Card column variant ── */
+.card--column{
+  flex-direction:column;align-items:stretch;gap:10px;
+}
+.card--column .card__title{font-size:13px;color:var(--chrome-text-dim);text-transform:uppercase;letter-spacing:.05em;font-weight:700;}
+
+/* ── Segment notes ── */
+.seg-notes{
+  width:100%;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--chrome-border-strong);
+  border-radius:14px;
+  padding:12px 14px;
+  color:var(--chrome-text);
+  font-size:14px;
+  font-family:var(--font-body);
+  outline:none;
+  resize:vertical;
+  min-height:90px;
+  transition:border-color .2s;
+}
+.seg-notes:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(43,196,176,0.15);
+}
+
+/* ── Photo grid ── */
+.photo-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+}
+.photo-thumb{
+  aspect-ratio:1;border-radius:12px;
+  background:var(--glass-strong) center/cover no-repeat;
+  border:1px solid var(--chrome-border);
+}
+
+/* ── Upload label ── */
+.upload-label{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px;
+  background:rgba(255,255,255,0.03);
+  border:1.5px dashed var(--chrome-border-strong);
+  border-radius:14px;
+  cursor:pointer;
+  font-size:13px;font-weight:700;
+  color:var(--chrome-text-dim);
+  transition:border-color .2s, color .2s;
+}
+.upload-label:hover{border-color:var(--accent);color:var(--accent);}
 
 /* ── Chips ── */
 .chip-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
