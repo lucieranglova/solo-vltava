@@ -21,7 +21,7 @@ import { STRAVA_CLIENT_ID, STRAVA_REDIRECT_URI, FUNCTIONS_BASE_URL } from './fir
 // PWA registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+    navigator.serviceWorker.register('/solo-vltava/sw.js').catch(() => {});
   });
 }
 

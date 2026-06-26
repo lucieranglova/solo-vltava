@@ -2,7 +2,7 @@
   "name": "Solo Vltava",
   "short_name": "Solo Vltava",
   "description": "Průvodce přípravou na sólo Vltava Run",
-  "start_url": "/",
+  "start_url": "/solo-vltava/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#13162B",
