@@ -500,57 +500,75 @@
             <!-- Front: KM -->
             <div class="flip-face flip-front">
               <div class="flip-card-inner glass-card">
-                <div class="flip-label">Naběháno celkem</div>
-                <div class="flip-number-row">
-                  <span class="flip-number font-display" id="flip-km">0</span>
-                  <span class="flip-unit">km</span>
+                <div class="flip-face-header">
+                  <span class="flip-eyebrow">Celkem naběháno</span>
                 </div>
-                <div class="flip-comparison font-mono" id="flip-km-comparison">≈ 0× délka Vltavy</div>
-                <div class="mountain-viz" id="mountain-viz-km">
-                  <svg class="mountain-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                <div class="flip-mountain-wrap">
+                  <svg viewBox="0 0 300 160" preserveAspectRatio="none" class="flip-mountain-svg" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <linearGradient id="mountain-grad-km" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#2BC4B0"/>
+                        <stop offset="0%" stop-color="#6FE0D2"/>
                         <stop offset="100%" stop-color="#1A8A7F"/>
                       </linearGradient>
                       <clipPath id="mountain-clip-km">
-                        <path d="M100 5 L5 115 L195 115 Z"/>
+                        <path d="M0,140 L55,58 L95,102 L145,28 L195,92 L237,54 L300,118 L300,160 L0,160 Z"/>
                       </clipPath>
                     </defs>
-                    <path d="M100 5 L5 115 L195 115 Z" fill="none" stroke="#2BC4B0" stroke-width="2" opacity="0.4"/>
-                    <rect id="mountain-fill-km" x="0" y="0" width="200" height="120" fill="url(#mountain-grad-km)" clip-path="url(#mountain-clip-km)" style="transform-origin: center bottom; transform-box: fill-box; transform: scaleY(0); opacity: 0.65"/>
-                    <text x="100" y="85" text-anchor="middle" fill="#F4E7B8" font-family="Baloo 2" font-size="20" font-weight="700" id="mountain-pct-km">0%</text>
+                    <path d="M0,140 L55,58 L95,102 L145,28 L195,92 L237,54 L300,118 L300,160 L0,160 Z" fill="rgba(255,255,255,0.06)"/>
+                    <g clip-path="url(#mountain-clip-km)">
+                      <rect id="mountain-fill-km" x="0" y="0" width="300" height="160" fill="url(#mountain-grad-km)" style="transform-origin: center bottom; transform-box: fill-box; transform: scaleY(0); opacity: 0.85;"/>
+                    </g>
+                    <polygon points="47,70 55,58 63,70" fill="rgba(255,255,255,0.8)"/>
+                    <polygon points="137,40 145,28 153,40" fill="rgba(255,255,255,0.8)"/>
+                    <polygon points="229,66 237,54 245,66" fill="rgba(255,255,255,0.8)"/>
+                    <text id="mountain-pct-km" x="150" y="112" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Baloo 2" font-size="26" font-weight="800">0%</text>
                   </svg>
                 </div>
-                <div class="flip-target font-mono" id="flip-km-target">cíl: 0 km</div>
+                <div class="flip-value-section">
+                  <div class="flip-number-row">
+                    <span class="flip-number font-display" id="flip-km">0</span>
+                    <span class="flip-unit">km</span>
+                  </div>
+                  <div class="flip-target font-mono" id="flip-km-target">cíl: 375 km</div>
+                  <div class="flip-comparison font-mono" id="flip-km-comparison">≈ 0× délka Vltavy</div>
+                </div>
               </div>
             </div>
             <!-- Back: Elevation -->
             <div class="flip-face flip-back">
               <div class="flip-card-inner glass-card">
-                <div class="flip-label">Celkové převýšení</div>
-                <div class="flip-number-row">
-                  <span class="flip-number font-display" id="flip-elev">0</span>
-                  <span class="flip-unit">m</span>
+                <div class="flip-face-header">
+                  <span class="flip-eyebrow">Celkem nastoupáno</span>
                 </div>
-                <div class="flip-comparison font-mono" id="flip-elev-comparison">≈ 0× výška Everestu</div>
-                <div class="mountain-viz" id="mountain-viz-elev">
-                  <svg class="mountain-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                <div class="flip-mountain-wrap">
+                  <svg viewBox="0 0 300 160" preserveAspectRatio="none" class="flip-mountain-svg" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <linearGradient id="mountain-grad-elev" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#FF8C5A"/>
+                        <stop offset="0%" stop-color="#FFC79A"/>
                         <stop offset="100%" stop-color="#C04A20"/>
                       </linearGradient>
                       <clipPath id="mountain-clip-elev">
-                        <path d="M100 5 L5 115 L195 115 Z"/>
+                        <path d="M0,140 L55,58 L95,102 L145,28 L195,92 L237,54 L300,118 L300,160 L0,160 Z"/>
                       </clipPath>
                     </defs>
-                    <path d="M100 5 L5 115 L195 115 Z" fill="none" stroke="#FF8C5A" stroke-width="2" opacity="0.4"/>
-                    <rect id="mountain-fill-elev" x="0" y="0" width="200" height="120" fill="url(#mountain-grad-elev)" clip-path="url(#mountain-clip-elev)" style="transform-origin: center bottom; transform-box: fill-box; transform: scaleY(0); opacity: 0.65"/>
-                    <text x="100" y="85" text-anchor="middle" fill="#F4E7B8" font-family="Baloo 2" font-size="20" font-weight="700" id="mountain-pct-elev">0%</text>
+                    <path d="M0,140 L55,58 L95,102 L145,28 L195,92 L237,54 L300,118 L300,160 L0,160 Z" fill="rgba(255,255,255,0.06)"/>
+                    <g clip-path="url(#mountain-clip-elev)">
+                      <rect id="mountain-fill-elev" x="0" y="0" width="300" height="160" fill="url(#mountain-grad-elev)" style="transform-origin: center bottom; transform-box: fill-box; transform: scaleY(0); opacity: 0.85;"/>
+                    </g>
+                    <polygon points="47,70 55,58 63,70" fill="rgba(255,255,255,0.8)"/>
+                    <polygon points="137,40 145,28 153,40" fill="rgba(255,255,255,0.8)"/>
+                    <polygon points="229,66 237,54 245,66" fill="rgba(255,255,255,0.8)"/>
+                    <text id="mountain-pct-elev" x="150" y="112" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Baloo 2" font-size="26" font-weight="800">0%</text>
                   </svg>
                 </div>
-                <div class="flip-target font-mono" id="flip-elev-target">cíl: 0 m</div>
+                <div class="flip-value-section">
+                  <div class="flip-number-row">
+                    <span class="flip-number font-display" id="flip-elev">0</span>
+                    <span class="flip-unit">m</span>
+                  </div>
+                  <div class="flip-target font-mono" id="flip-elev-target">cíl: 10 000 m</div>
+                  <div class="flip-comparison font-mono" id="flip-elev-comparison">≈ 0× výška Everestu</div>
+                </div>
               </div>
             </div>
           </div>
@@ -1217,23 +1235,23 @@
   <!-- Bottom navigation -->
   <nav class="bottom-nav glass-card" id="bottom-nav">
     <button class="nav-item active" data-nav="dashboard" aria-label="Domů">
-      <svg class="nav-icon"><use href="#icon-home"/></svg>
+      <div class="nav-icon-wrap"><svg class="nav-icon"><use href="#icon-home"/></svg></div>
       <span class="nav-label">Domů</span>
     </button>
     <button class="nav-item" data-nav="performance" aria-label="Výkony">
-      <svg class="nav-icon"><use href="#icon-mountain"/></svg>
+      <div class="nav-icon-wrap"><svg class="nav-icon"><use href="#icon-mountain"/></svg></div>
       <span class="nav-label">Výkony</span>
     </button>
     <button class="nav-item" data-nav="route" aria-label="Trasa">
-      <svg class="nav-icon"><use href="#icon-route"/></svg>
+      <div class="nav-icon-wrap"><svg class="nav-icon"><use href="#icon-route"/></svg></div>
       <span class="nav-label">Trasa</span>
     </button>
     <button class="nav-item" data-nav="organization" aria-label="Organizace">
-      <svg class="nav-icon"><use href="#icon-org"/></svg>
+      <div class="nav-icon-wrap"><svg class="nav-icon"><use href="#icon-org"/></svg></div>
       <span class="nav-label">Organizace</span>
     </button>
     <button class="nav-item" data-nav="gallery" aria-label="Galerie">
-      <svg class="nav-icon"><use href="#icon-gallery"/></svg>
+      <div class="nav-icon-wrap"><svg class="nav-icon"><use href="#icon-gallery"/></svg></div>
       <span class="nav-label">Galerie</span>
     </button>
   </nav>
