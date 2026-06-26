@@ -21,273 +21,56 @@
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" id="svg-defs">
   <defs>
 
+    <!-- Shared scene gradients (reference v5) -->
+    <linearGradient id="skyRano" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFD9A8"/><stop offset="55%" stop-color="#FFB48C"/><stop offset="100%" stop-color="#7FD6C9"/></linearGradient>
+    <linearGradient id="skyDen" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6EC6E0"/><stop offset="55%" stop-color="#9FE6DA"/><stop offset="100%" stop-color="#E3F7EF"/></linearGradient>
+    <linearGradient id="skySoumrak" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#262460"/><stop offset="55%" stop-color="#7A4A6E"/><stop offset="100%" stop-color="#FF8C5A"/></linearGradient>
+    <linearGradient id="skyNoc" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0E1026"/><stop offset="100%" stop-color="#2B2A55"/></linearGradient>
+    <linearGradient id="gradFillTeal" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6FE0D2"/><stop offset="100%" stop-color="#1B8F86"/></linearGradient>
+    <linearGradient id="gradFillCoral" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFC79A"/><stop offset="100%" stop-color="#E06A36"/></linearGradient>
+
     <!-- RÁNO (5–10h) -->
-    <symbol id="scene-morning" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <linearGradient id="sky-morning" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#1A1F3E"/>
-          <stop offset="40%" stop-color="#3D2B5C"/>
-          <stop offset="70%" stop-color="#C4604A"/>
-          <stop offset="100%" stop-color="#F4A460"/>
-        </linearGradient>
-        <linearGradient id="river-morning" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#F4916B" stop-opacity="0.6"/>
-          <stop offset="100%" stop-color="#2A3560" stop-opacity="0.8"/>
-        </linearGradient>
-        <linearGradient id="mist-morning" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#F4E7B8" stop-opacity="0.0"/>
-          <stop offset="100%" stop-color="#F4E7B8" stop-opacity="0.25"/>
-        </linearGradient>
-        <radialGradient id="sun-morning" cx="50%" cy="65%" r="20%">
-          <stop offset="0%" stop-color="#FFE066" stop-opacity="0.9"/>
-          <stop offset="40%" stop-color="#FF9A3C" stop-opacity="0.5"/>
-          <stop offset="100%" stop-color="#FF6B35" stop-opacity="0"/>
-        </radialGradient>
-        <filter id="blur-mist">
-          <feGaussianBlur stdDeviation="8"/>
-        </filter>
-      </defs>
-      <!-- Sky -->
-      <rect width="390" height="844" fill="url(#sky-morning)"/>
-      <!-- Sun glow -->
-      <ellipse cx="195" cy="580" rx="120" ry="80" fill="url(#sun-morning)"/>
-      <!-- Sun -->
-      <circle cx="195" cy="570" r="22" fill="#FFE066" opacity="0.9"/>
-      <!-- Horizon haze -->
-      <ellipse cx="195" cy="570" rx="200" ry="30" fill="#FF9A3C" opacity="0.25" filter="url(#blur-mist)"/>
-      <!-- Far hills -->
-      <path d="M0 500 Q60 440 130 460 Q190 440 250 455 Q310 435 390 460 L390 844 L0 844 Z" fill="#1E2A52" opacity="0.7"/>
-      <path d="M0 520 Q80 470 160 485 Q220 460 290 478 Q340 468 390 482 L390 844 L0 844 Z" fill="#162040" opacity="0.6"/>
-      <!-- River valley -->
-      <path d="M0 600 Q50 585 100 595 Q150 580 200 590 Q260 578 320 588 Q355 582 390 588 L390 844 L0 844 Z" fill="url(#river-morning)"/>
-      <!-- River water -->
-      <path d="M30 620 Q80 610 140 618 Q200 608 260 616 Q310 608 370 614 Q380 616 390 614 L390 660 Q360 656 310 662 Q260 656 200 664 Q140 658 80 666 Q40 660 0 664 Z" fill="#2BC4B0" opacity="0.25"/>
-      <!-- River shimmer lines -->
-      <line x1="60" y1="635" x2="120" y2="633" stroke="#F4E7B8" stroke-width="1.5" opacity="0.5"/>
-      <line x1="170" y1="640" x2="240" y2="637" stroke="#F4E7B8" stroke-width="1" opacity="0.4"/>
-      <line x1="280" y1="632" x2="340" y2="630" stroke="#F4E7B8" stroke-width="1.5" opacity="0.45"/>
-      <!-- Morning mist over river -->
-      <rect x="0" y="600" width="390" height="80" fill="url(#mist-morning)" filter="url(#blur-mist)"/>
-      <!-- Near forest left -->
-      <path d="M-10 620 Q20 555 50 570 Q70 545 90 560 Q110 535 130 555 Q150 530 170 550 Q185 535 195 555 L195 844 L-10 844 Z" fill="#0F1928"/>
-      <!-- Near forest right -->
-      <path d="M200 844 L200 560 Q215 540 230 555 Q250 530 270 550 Q290 535 310 552 Q330 530 350 548 Q370 540 390 555 L390 844 Z" fill="#0F1928"/>
-      <!-- Tree details left -->
-      <path d="M40 570 L55 530 L70 570 Z" fill="#162030"/>
-      <path d="M80 558 L95 515 L110 558 Z" fill="#162030"/>
-      <path d="M125 548 L140 508 L155 548 Z" fill="#162030"/>
-      <!-- Tree details right -->
-      <path d="M230 555 L245 515 L260 555 Z" fill="#162030"/>
-      <path d="M275 545 L290 505 L305 545 Z" fill="#162030"/>
-      <path d="M320 550 L335 510 L350 550 Z" fill="#162030"/>
-      <!-- Stars fading -->
-      <circle cx="80" cy="80" r="1.5" fill="#F4E7B8" opacity="0.6"/>
-      <circle cx="140" cy="50" r="1" fill="#F4E7B8" opacity="0.5"/>
-      <circle cx="260" cy="90" r="1.5" fill="#F4E7B8" opacity="0.4"/>
-      <circle cx="320" cy="60" r="1" fill="#F4E7B8" opacity="0.6"/>
-      <circle cx="50" cy="140" r="1" fill="#F4E7B8" opacity="0.3"/>
-      <circle cx="350" cy="120" r="1.5" fill="#F4E7B8" opacity="0.4"/>
-      <!-- Birds -->
-      <path d="M150 200 Q155 195 160 200 Q165 195 170 200" stroke="#F4E7B8" stroke-width="1.5" fill="none" opacity="0.7"/>
-      <path d="M200 185 Q204 181 208 185 Q212 181 216 185" stroke="#F4E7B8" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <path d="M240 210 Q244 206 248 210 Q252 206 256 210" stroke="#F4E7B8" stroke-width="1.2" fill="none" opacity="0.5"/>
+    <symbol id="scene-rano" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice">
+      <rect width="320" height="700" fill="url(#skyRano)"/>
+      <circle cx="225" cy="150" r="55" fill="#FFEAB3"/>
+      <path d="M55 95l8-7 8 7M95 130l7-6 7 6" stroke="#7A5C46" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M0 480 L60 400 L120 460 L180 380 L240 450 L300 410 L320 440 L320 700 L0 700 Z" fill="#2F8F73" opacity="0.55"/>
+      <path d="M0 560 L70 460 L140 530 L210 440 L270 520 L320 470 L320 700 L0 700 Z" fill="#3FA37E"/>
+      <path d="M62 468 L70 438 L78 468 Z" fill="#1F6B4E"/><path d="M202 448 L210 418 L218 448 Z" fill="#1F6B4E"/><path d="M255 470 L262 444 L269 470 Z" fill="#1F6B4E"/>
+      <path d="M0 650 Q80 590 160 635 T320 610 L320 700 L0 700 Z" fill="#6FC79A"/>
+      <path d="M195 560 C175 600 215 630 175 665 C155 685 165 695 150 700" stroke="#D9F2EC" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.85"/>
     </symbol>
 
     <!-- DEN (10–17h) -->
-    <symbol id="scene-day" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <linearGradient id="sky-day" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#1565C0"/>
-          <stop offset="50%" stop-color="#2196F3"/>
-          <stop offset="100%" stop-color="#64B5F6"/>
-        </linearGradient>
-        <linearGradient id="river-day" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#42A5F5" stop-opacity="0.7"/>
-          <stop offset="100%" stop-color="#1565C0" stop-opacity="0.5"/>
-        </linearGradient>
-        <radialGradient id="sun-day" cx="70%" cy="30%" r="25%">
-          <stop offset="0%" stop-color="#FFF9C4" stop-opacity="0.8"/>
-          <stop offset="60%" stop-color="#FFE082" stop-opacity="0.2"/>
-          <stop offset="100%" stop-color="#FFE082" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
-      <rect width="390" height="844" fill="url(#sky-day)"/>
-      <!-- Sun halo -->
-      <circle cx="275" cy="130" r="60" fill="url(#sun-day)"/>
-      <!-- Sun -->
-      <circle cx="275" cy="130" r="28" fill="#FFF59D" opacity="0.95"/>
-      <!-- Clouds -->
-      <ellipse cx="80" cy="180" rx="70" ry="28" fill="white" opacity="0.85"/>
-      <ellipse cx="120" cy="165" rx="50" ry="24" fill="white" opacity="0.9"/>
-      <ellipse cx="50" cy="175" rx="40" ry="20" fill="white" opacity="0.8"/>
-      <ellipse cx="280" cy="240" rx="80" ry="26" fill="white" opacity="0.75"/>
-      <ellipse cx="320" cy="228" rx="55" ry="22" fill="white" opacity="0.8"/>
-      <ellipse cx="240" cy="238" rx="45" ry="20" fill="white" opacity="0.7"/>
-      <ellipse cx="150" cy="300" rx="60" ry="22" fill="white" opacity="0.6"/>
-      <!-- Far hills green -->
-      <path d="M0 460 Q70 410 150 430 Q210 405 280 422 Q330 408 390 425 L390 844 L0 844 Z" fill="#2E7D32" opacity="0.8"/>
-      <path d="M0 490 Q90 448 170 462 Q240 440 310 458 Q355 448 390 460 L390 844 L0 844 Z" fill="#1B5E20" opacity="0.7"/>
-      <!-- Meadow -->
-      <path d="M0 560 Q100 545 200 552 Q290 540 390 548 L390 844 L0 844 Z" fill="#2E7D32"/>
-      <!-- River -->
-      <path d="M0 590 Q60 580 130 586 Q200 575 270 582 Q330 576 390 580 L390 640 Q340 636 270 642 Q200 636 130 644 Q60 638 0 644 Z" fill="url(#river-day)"/>
-      <!-- River sparkles -->
-      <circle cx="80" cy="608" r="2" fill="white" opacity="0.7"/>
-      <circle cx="140" cy="614" r="1.5" fill="white" opacity="0.6"/>
-      <circle cx="210" cy="605" r="2" fill="white" opacity="0.8"/>
-      <circle cx="280" cy="612" r="1.5" fill="white" opacity="0.6"/>
-      <circle cx="340" cy="608" r="2" fill="white" opacity="0.7"/>
-      <line x1="100" y1="620" x2="150" y2="618" stroke="white" stroke-width="1" opacity="0.5"/>
-      <line x1="220" y1="625" x2="280" y2="622" stroke="white" stroke-width="1" opacity="0.4"/>
-      <!-- Near forest -->
-      <path d="M-10 610 Q30 550 60 568 Q80 540 105 558 Q130 530 155 552 Q175 532 195 555 L195 844 L-10 844 Z" fill="#1B5E20"/>
-      <path d="M200 844 L200 558 Q220 535 245 552 Q268 528 292 548 Q315 530 340 548 Q360 535 390 550 L390 844 Z" fill="#1B5E20"/>
-      <!-- Tree highlights (sunlit) -->
-      <path d="M55 568 L68 530 L81 568 Z" fill="#2E7D32"/>
-      <path d="M100 558 L113 518 L126 558 Z" fill="#2E7D32"/>
-      <path d="M245 552 L258 512 L271 552 Z" fill="#2E7D32"/>
-      <path d="M315 548 L328 508 L341 548 Z" fill="#2E7D32"/>
-      <!-- Birds in the sky -->
-      <path d="M100 350 Q104 346 108 350 Q112 346 116 350" stroke="#1565C0" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <path d="M140 340 Q144 336 148 340 Q152 336 156 340" stroke="#1565C0" stroke-width="1.5" fill="none" opacity="0.5"/>
-      <path d="M170 360 Q173 357 176 360 Q179 357 182 360" stroke="#1565C0" stroke-width="1.2" fill="none" opacity="0.45"/>
+    <symbol id="scene-den" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice">
+      <rect width="320" height="700" fill="url(#skyDen)"/>
+      <circle cx="170" cy="95" r="68" fill="#FFEFAF" opacity="0.35"/><circle cx="170" cy="95" r="38" fill="#FFF6CF"/>
+      <path d="M0 480 L60 400 L120 460 L180 380 L240 450 L300 410 L320 440 L320 700 L0 700 Z" fill="#2E9C72" opacity="0.5"/>
+      <path d="M0 560 L70 460 L140 530 L210 440 L270 520 L320 470 L320 700 L0 700 Z" fill="#3FB07F"/>
+      <path d="M62 468 L70 438 L78 468 Z" fill="#1B6B49"/><path d="M202 448 L210 418 L218 448 Z" fill="#1B6B49"/><path d="M255 470 L262 444 L269 470 Z" fill="#1B6B49"/>
+      <path d="M0 650 Q80 590 160 635 T320 610 L320 700 L0 700 Z" fill="#79D79C"/>
+      <path d="M195 560 C175 600 215 630 175 665 C155 685 165 695 150 700" stroke="#CFF3EA" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.9"/>
     </symbol>
 
     <!-- SOUMRAK (17–21h) -->
-    <symbol id="scene-dusk" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <linearGradient id="sky-dusk" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#0D1B3E"/>
-          <stop offset="35%" stop-color="#4A2060"/>
-          <stop offset="60%" stop-color="#C44B28"/>
-          <stop offset="80%" stop-color="#FF8C5A"/>
-          <stop offset="100%" stop-color="#FFB347"/>
-        </linearGradient>
-        <linearGradient id="river-dusk" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#FF8C5A" stop-opacity="0.55"/>
-          <stop offset="100%" stop-color="#4A2060" stop-opacity="0.6"/>
-        </linearGradient>
-        <radialGradient id="sun-dusk" cx="25%" cy="75%" r="30%">
-          <stop offset="0%" stop-color="#FFB347" stop-opacity="0.85"/>
-          <stop offset="50%" stop-color="#FF6B35" stop-opacity="0.4"/>
-          <stop offset="100%" stop-color="#C44B28" stop-opacity="0"/>
-        </radialGradient>
-        <filter id="blur-dusk">
-          <feGaussianBlur stdDeviation="6"/>
-        </filter>
-      </defs>
-      <rect width="390" height="844" fill="url(#sky-dusk)"/>
-      <!-- Sun glow near horizon -->
-      <ellipse cx="100" cy="580" rx="130" ry="70" fill="url(#sun-dusk)"/>
-      <!-- Sun just at horizon -->
-      <circle cx="100" cy="578" r="18" fill="#FFD700" opacity="0.85"/>
-      <ellipse cx="100" cy="580" rx="60" ry="20" fill="#FF8C5A" opacity="0.4" filter="url(#blur-dusk)"/>
-      <!-- Crepuscular rays -->
-      <line x1="100" y1="578" x2="200" y2="200" stroke="#FF8C5A" stroke-width="20" opacity="0.08"/>
-      <line x1="100" y1="578" x2="280" y2="180" stroke="#FFB347" stroke-width="15" opacity="0.06"/>
-      <line x1="100" y1="578" x2="0" y2="300" stroke="#FF8C5A" stroke-width="18" opacity="0.07"/>
-      <line x1="100" y1="578" x2="160" y2="150" stroke="#FFB347" stroke-width="12" opacity="0.05"/>
-      <!-- Stars appearing -->
-      <circle cx="280" cy="80" r="1.5" fill="#F4E7B8" opacity="0.8"/>
-      <circle cx="320" cy="120" r="1" fill="#F4E7B8" opacity="0.7"/>
-      <circle cx="350" cy="60" r="2" fill="#F4E7B8" opacity="0.85"/>
-      <circle cx="240" cy="100" r="1.5" fill="#F4E7B8" opacity="0.6"/>
-      <circle cx="300" cy="150" r="1" fill="#F4E7B8" opacity="0.5"/>
-      <circle cx="370" cy="90" r="1.5" fill="#F4E7B8" opacity="0.7"/>
-      <!-- Far silhouette hills -->
-      <path d="M0 470 Q80 420 160 440 Q220 415 290 432 Q340 418 390 435 L390 844 L0 844 Z" fill="#1A0A30" opacity="0.8"/>
-      <path d="M0 500 Q100 455 180 472 Q250 450 320 468 Q360 455 390 468 L390 844 L0 844 Z" fill="#130825" opacity="0.75"/>
-      <!-- River reflecting sunset -->
-      <path d="M0 580 Q70 570 150 576 Q220 566 290 572 Q340 566 390 570 L390 630 Q340 626 290 632 Q220 626 150 634 Q70 628 0 634 Z" fill="url(#river-dusk)"/>
-      <!-- River orange reflections -->
-      <line x1="40" y1="595" x2="100" y2="593" stroke="#FF8C5A" stroke-width="2" opacity="0.4"/>
-      <line x1="150" y1="600" x2="220" y2="598" stroke="#FFB347" stroke-width="2" opacity="0.35"/>
-      <line x1="260" y1="594" x2="330" y2="592" stroke="#FF8C5A" stroke-width="1.5" opacity="0.4"/>
-      <!-- Near forest (dark silhouettes) -->
-      <path d="M-10 580 Q20 525 50 540 Q75 510 100 528 Q125 500 148 520 Q168 505 185 525 L185 844 L-10 844 Z" fill="#0A0818"/>
-      <path d="M205 844 L205 528 Q225 505 248 522 Q272 498 295 516 Q318 500 342 518 Q362 508 390 522 L390 844 Z" fill="#0A0818"/>
-      <!-- Detailed dusk trees -->
-      <path d="M48 540 L63 498 L78 540 Z" fill="#0D0C20"/>
-      <path d="M95 528 L110 486 L125 528 Z" fill="#0D0C20"/>
-      <path d="M140 520 L155 478 L170 520 Z" fill="#0D0C20"/>
-      <path d="M242 522 L257 480 L272 522 Z" fill="#0D0C20"/>
-      <path d="M290 516 L305 474 L320 516 Z" fill="#0D0C20"/>
-      <path d="M338 518 L353 476 L368 518 Z" fill="#0D0C20"/>
+    <symbol id="scene-soumrak" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice">
+      <rect width="320" height="700" fill="url(#skySoumrak)"/>
+      <circle cx="50" cy="80" r="1.6" fill="#F4E7B8"/><circle cx="120" cy="50" r="1.3" fill="#F4E7B8"/><circle cx="220" cy="90" r="1.6" fill="#F4E7B8"/><circle cx="280" cy="60" r="1.4" fill="#F4E7B8"/><circle cx="70" cy="150" r="1.2" fill="#F4E7B8"/><circle cx="250" cy="140" r="1.5" fill="#F4E7B8"/>
+      <circle cx="230" cy="520" r="70" fill="#FFB36B" opacity="0.9"/>
+      <path d="M0 470 L70 380 L140 450 L210 360 L270 440 L320 390 L320 700 L0 700 Z" fill="#232A4D"/>
+      <path d="M0 560 L80 470 L160 540 L240 450 L300 530 L320 490 L320 700 L0 700 Z" fill="#2F3760"/>
+      <path d="M120 680 L160 560 L200 680 Z" fill="#1B2040"/><polygon points="145,680 160,610 175,680" fill="#FF8C5A" opacity="0.9"/>
     </symbol>
 
     <!-- NOC (21–5h) -->
-    <symbol id="scene-night" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <linearGradient id="sky-night" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#06071A"/>
-          <stop offset="50%" stop-color="#0D1035"/>
-          <stop offset="100%" stop-color="#13162B"/>
-        </linearGradient>
-        <radialGradient id="moon-glow" cx="70%" cy="20%" r="20%">
-          <stop offset="0%" stop-color="#F4E7B8" stop-opacity="0.4"/>
-          <stop offset="60%" stop-color="#F4E7B8" stop-opacity="0.1"/>
-          <stop offset="100%" stop-color="#F4E7B8" stop-opacity="0"/>
-        </radialGradient>
-        <linearGradient id="river-night" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#2BC4B0" stop-opacity="0.2"/>
-          <stop offset="50%" stop-color="#1A1F5C" stop-opacity="0.6"/>
-          <stop offset="100%" stop-color="#0D1035" stop-opacity="0.8"/>
-        </linearGradient>
-        <filter id="blur-star">
-          <feGaussianBlur stdDeviation="0.5"/>
-        </filter>
-      </defs>
-      <rect width="390" height="844" fill="url(#sky-night)"/>
-      <!-- Moon glow -->
-      <circle cx="275" cy="120" r="90" fill="url(#moon-glow)"/>
-      <!-- Moon -->
-      <circle cx="275" cy="118" r="26" fill="#F4E7B8" opacity="0.9"/>
-      <circle cx="285" cy="112" r="26" fill="#0D1035" opacity="0.8"/><!-- Crescent mask -->
-      <!-- Stars — many -->
-      <circle cx="30" cy="50" r="1.5" fill="#F4E7B8" opacity="0.9"/>
-      <circle cx="65" cy="30" r="1" fill="#F4E7B8" opacity="0.8"/>
-      <circle cx="110" cy="70" r="1.5" fill="#F4E7B8" opacity="0.7"/>
-      <circle cx="155" cy="40" r="1" fill="white" opacity="0.9"/>
-      <circle cx="90" cy="110" r="1.2" fill="#F4E7B8" opacity="0.65"/>
-      <circle cx="190" cy="60" r="1.5" fill="#F4E7B8" opacity="0.8"/>
-      <circle cx="215" cy="100" r="1" fill="white" opacity="0.7"/>
-      <circle cx="240" cy="50" r="1" fill="#F4E7B8" opacity="0.6"/>
-      <circle cx="310" cy="70" r="1.5" fill="#F4E7B8" opacity="0.75"/>
-      <circle cx="345" cy="45" r="1" fill="white" opacity="0.85"/>
-      <circle cx="360" cy="90" r="1.2" fill="#F4E7B8" opacity="0.7"/>
-      <circle cx="380" cy="55" r="1.5" fill="#F4E7B8" opacity="0.8"/>
-      <circle cx="40" cy="160" r="1" fill="#F4E7B8" opacity="0.55"/>
-      <circle cx="75" cy="190" r="1.5" fill="#F4E7B8" opacity="0.6"/>
-      <circle cx="130" cy="150" r="1" fill="white" opacity="0.7"/>
-      <circle cx="175" cy="180" r="1.2" fill="#F4E7B8" opacity="0.65"/>
-      <circle cx="220" cy="160" r="1" fill="#F4E7B8" opacity="0.5"/>
-      <circle cx="340" cy="170" r="1.5" fill="#F4E7B8" opacity="0.7"/>
-      <circle cx="375" cy="150" r="1" fill="white" opacity="0.6"/>
-      <!-- Milky Way hint -->
-      <path d="M0 200 Q100 180 200 210 Q300 195 390 220" stroke="#F4E7B8" stroke-width="30" opacity="0.03" fill="none" filter="url(#blur-star)"/>
-      <!-- Far dark hills -->
-      <path d="M0 480 Q80 435 160 452 Q230 428 300 445 Q350 432 390 448 L390 844 L0 844 Z" fill="#080C20"/>
-      <path d="M0 510 Q90 468 170 484 Q245 462 315 478 Q358 465 390 478 L390 844 L0 844 Z" fill="#05081A"/>
-      <!-- River with moonlight -->
-      <path d="M0 570 Q70 560 150 566 Q230 556 300 562 Q350 556 390 560 L390 620 Q350 616 300 622 Q230 616 150 624 Q70 618 0 624 Z" fill="url(#river-night)"/>
-      <!-- Moon reflection in river -->
-      <ellipse cx="195" cy="592" rx="25" ry="8" fill="#F4E7B8" opacity="0.2"/>
-      <line x1="175" y1="598" x2="215" y2="596" stroke="#F4E7B8" stroke-width="1.5" opacity="0.25"/>
-      <line x1="180" y1="604" x2="210" y2="602" stroke="#F4E7B8" stroke-width="1" opacity="0.2"/>
-      <!-- Near forest very dark -->
-      <path d="M-10 570 Q20 515 52 530 Q76 502 102 520 Q128 492 153 512 Q174 495 192 516 L192 844 L-10 844 Z" fill="#030610"/>
-      <path d="M198 844 L198 518 Q220 494 244 512 Q268 488 292 506 Q316 490 340 508 Q362 496 390 512 L390 844 Z" fill="#030610"/>
-      <!-- Night tree silhouettes -->
-      <path d="M48 530 L65 484 L82 530 Z" fill="#060916"/>
-      <path d="M96 520 L113 474 L130 520 Z" fill="#060916"/>
-      <path d="M145 512 L162 466 L179 512 Z" fill="#060916"/>
-      <path d="M238 512 L255 466 L272 512 Z" fill="#060916"/>
-      <path d="M286 506 L303 460 L320 506 Z" fill="#060916"/>
-      <path d="M334 508 L351 462 L368 508 Z" fill="#060916"/>
-      <!-- Fireflies / distant lights -->
-      <circle cx="60" cy="545" r="2" fill="#2BC4B0" opacity="0.5"/>
-      <circle cx="290" cy="538" r="1.5" fill="#2BC4B0" opacity="0.4"/>
-      <circle cx="330" cy="548" r="2" fill="#F4E7B8" opacity="0.35"/>
+    <symbol id="scene-noc" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice">
+      <rect width="320" height="700" fill="url(#skyNoc)"/>
+      <circle cx="110" cy="140" r="48" fill="#F4E7B8"/><circle cx="98" cy="128" r="6" fill="#E3D49B" opacity="0.5"/><circle cx="124" cy="152" r="4" fill="#E3D49B" opacity="0.5"/>
+      <circle cx="220" cy="60" r="1.5" fill="#F4E7B8"/><circle cx="270" cy="110" r="1.3" fill="#F4E7B8"/><circle cx="60" cy="220" r="1.4" fill="#F4E7B8"/><circle cx="290" cy="200" r="1.6" fill="#F4E7B8"/><circle cx="150" cy="40" r="1.2" fill="#F4E7B8"/><circle cx="30" cy="90" r="1.3" fill="#F4E7B8"/>
+      <path d="M0 470 L80 380 L160 450 L230 360 L300 440 L320 400 L320 700 L0 700 Z" fill="#1B1E3D"/>
+      <path d="M0 560 L90 470 L170 540 L250 450 L310 530 L320 500 L320 700 L0 700 Z" fill="#262B52"/>
+      <line x1="250" y1="450" x2="250" y2="410" stroke="#9098B8" stroke-width="1.6"/><polygon points="250,410 270,420 250,430" fill="#2BC4B0"/>
+      <path d="M170 540 C150 580 190 610 150 650 C130 670 140 685 120 700" stroke="#3B3F68" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.8"/>
     </symbol>
 
     <!-- Icon sprites -->
@@ -372,8 +155,8 @@
 <div id="app">
   <!-- Background illustration -->
   <div class="bg-illustration" id="bg-illustration" aria-hidden="true">
-    <svg class="bg-svg" id="bg-svg" xmlns="http://www.w3.org/2000/svg">
-      <use href="#scene-night" id="bg-scene-use"/>
+    <svg class="bg-svg" id="bg-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 700" preserveAspectRatio="xMidYMid slice">
+      <use href="#scene-noc" id="bg-scene-use"/>
     </svg>
     <div class="bg-overlay"></div>
   </div>
@@ -1238,27 +1021,22 @@
 
   </main>
 
-  <!-- Bottom navigation -->
-  <nav class="bottom-nav glass-card" id="bottom-nav">
-    <button class="nav-item active" data-nav="dashboard" aria-label="Domů">
-      <div class="nav-icon-wrap"><svg class="nav-icon"><use href="#icon-home"/></svg></div>
-      <span class="nav-label">Domů</span>
+  <!-- Bottom navigation (reference tabbar) -->
+  <nav class="tabbar" id="bottom-nav">
+    <button class="tabbar__item is-active" data-nav="dashboard" aria-label="Domů">
+      <div class="tabbar__icon-wrap"><svg class="icon"><use href="#icon-home"/></svg></div>
     </button>
-    <button class="nav-item" data-nav="performance" aria-label="Výkony">
-      <div class="nav-icon-wrap"><svg class="nav-icon"><use href="#icon-mountain"/></svg></div>
-      <span class="nav-label">Výkony</span>
+    <button class="tabbar__item" data-nav="performance" aria-label="Výkony">
+      <div class="tabbar__icon-wrap"><svg class="icon"><use href="#icon-mountain"/></svg></div>
     </button>
-    <button class="nav-item" data-nav="route" aria-label="Trasa">
-      <div class="nav-icon-wrap"><svg class="nav-icon"><use href="#icon-route"/></svg></div>
-      <span class="nav-label">Trasa</span>
+    <button class="tabbar__item" data-nav="route" aria-label="Trasa">
+      <div class="tabbar__icon-wrap"><svg class="icon"><use href="#icon-route"/></svg></div>
     </button>
-    <button class="nav-item" data-nav="organization" aria-label="Organizace">
-      <div class="nav-icon-wrap"><svg class="nav-icon"><use href="#icon-org"/></svg></div>
-      <span class="nav-label">Organizace</span>
+    <button class="tabbar__item" data-nav="organization" aria-label="Organizace">
+      <div class="tabbar__icon-wrap"><svg class="icon"><use href="#icon-org"/></svg></div>
     </button>
-    <button class="nav-item" data-nav="gallery" aria-label="Galerie">
-      <div class="nav-icon-wrap"><svg class="nav-icon"><use href="#icon-gallery"/></svg></div>
-      <span class="nav-label">Galerie</span>
+    <button class="tabbar__item" data-nav="gallery" aria-label="Galerie">
+      <div class="tabbar__icon-wrap"><svg class="icon"><use href="#icon-gallery"/></svg></div>
     </button>
   </nav>
 

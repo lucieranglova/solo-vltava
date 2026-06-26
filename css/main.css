@@ -1,66 +1,91 @@
-/* ===== CSS Custom Properties ===== */
+/* ===== CSS Custom Properties (reference design system v5) ===== */
 :root {
-  /* Dark theme (default) */
+  /* Core surfaces */
   --bg: #13162B;
-  --bg-deep: #0A0C1E;
-  --card-bg: rgba(20, 22, 44, 0.6);
-  --card-bg-solid: rgba(20, 22, 44, 0.92);
-  --nav-bg: rgba(14, 16, 35, 0.88);
-  --text: #F7F8FC;
-  --text-muted: rgba(247, 248, 252, 0.55);
-  --text-dim: rgba(247, 248, 252, 0.35);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-active: rgba(43, 196, 176, 0.4);
+  --surface: #1C2040;
+  --surface-2: #242951;
+  --surface-3: #2D3361;
+
+  /* Glass layers */
+  --glass: rgba(20,22,44,0.6);
+  --glass-strong: rgba(18,20,40,0.82);
+
+  /* Borders */
+  --border: rgba(247,248,252,0.08);
+  --border-strong: rgba(247,248,252,0.18);
+  --chrome-border: rgba(247,248,252,0.16);
+  --chrome-border-strong: rgba(247,248,252,0.28);
 
   /* Brand colors */
-  --teal: #2BC4B0;
-  --teal-dark: #1A8A7F;
-  --teal-bg: rgba(43, 196, 176, 0.12);
-  --coral: #FF8C5A;
-  --coral-dark: #C04A20;
-  --coral-bg: rgba(255, 140, 90, 0.12);
-  --green: #4CAF6D;
-  --green-bg: rgba(76, 175, 109, 0.12);
-  --moonlight: #F4E7B8;
+  --accent: #2BC4B0;
+  --accent-soft: rgba(43,196,176,0.18);
+  --warm: #FF8C5A;
+  --warm-soft: rgba(255,140,90,0.18);
+  --success: #4CAF6D;
+  --success-soft: rgba(76,175,109,0.18);
+  --moon: #F4E7B8;
   --strava: #FC4C02;
+
+  /* Aliases (kept for backward compat with existing screens) */
+  --teal: #2BC4B0;
+  --teal-dark: #1B8F86;
+  --teal-bg: rgba(43,196,176,0.18);
+  --coral: #FF8C5A;
+  --coral-dark: #E06A36;
+  --coral-bg: rgba(255,140,90,0.18);
+  --green: #4CAF6D;
+  --green-bg: rgba(76,175,109,0.18);
+  --moonlight: #F4E7B8;
+  --card-bg: rgba(20,22,44,0.6);
+  --card-bg-solid: rgba(18,20,40,0.82);
+
+  /* Text */
+  --text: #F7F8FC;
+  --text-dim: #9098B8;
+  --text-faint: #5D6390;
+  --text-muted: #9098B8;
+  --chrome-text: #F7F8FC;
+  --chrome-text-dim: #D7DAEC;
+  --chrome-text-faint: #A4A9C8;
 
   /* Typography */
   --font-display: 'Baloo 2', sans-serif;
   --font-body: 'Nunito', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
-  /* Spacing / radius */
-  --radius-sm: 10px;
-  --radius: 18px;
-  --radius-lg: 24px;
+  /* Radius */
+  --radius-sm: 14px;
+  --radius: 22px;
+  --radius-md: 22px;
+  --radius-lg: 32px;
   --radius-xl: 32px;
-  --radius-pill: 100px;
+  --radius-pill: 999px;
 
   /* Shadows */
   --shadow-card: 0 4px 24px rgba(0,0,0,0.35);
-  --shadow-nav: 0 -2px 24px rgba(0,0,0,0.5);
 
   /* Safe areas */
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
-
-  /* Nav height */
-  --nav-height: 72px;
 }
 
-[data-theme="light"] {
-  --bg: #EEF0F8;
-  --bg-deep: #DDE0F0;
-  --card-bg: rgba(255, 255, 255, 0.86);
-  --card-bg-solid: rgba(255, 255, 255, 0.96);
-  --nav-bg: rgba(240, 242, 252, 0.92);
+body.theme-light, [data-theme="light"] {
+  --glass: rgba(255,255,255,0.86);
+  --glass-strong: rgba(255,255,255,0.95);
+  --card-bg: rgba(255,255,255,0.86);
+  --card-bg-solid: rgba(255,255,255,0.95);
+  --chrome-text: #20243F;
+  --chrome-text-dim: #555B80;
+  --chrome-text-faint: #8488A8;
+  --chrome-border: rgba(20,20,50,0.10);
+  --chrome-border-strong: rgba(20,20,50,0.2);
   --text: #20243F;
-  --text-muted: rgba(32, 36, 63, 0.55);
-  --text-dim: rgba(32, 36, 63, 0.35);
-  --border: rgba(0, 0, 0, 0.07);
-  --border-active: rgba(43, 196, 176, 0.5);
-  --shadow-card: 0 4px 24px rgba(0,0,0,0.1);
-  --shadow-nav: 0 -2px 24px rgba(0,0,0,0.12);
+  --text-dim: #555B80;
+  --text-muted: #555B80;
+  --text-faint: #8488A8;
+  --border: rgba(0,0,0,0.07);
+  --border-strong: rgba(0,0,0,0.14);
+  --surface: #EEF0F8;
 }
 
 /* ===== Reset & Base ===== */
@@ -74,13 +99,17 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: var(--bg);
+  background:
+    radial-gradient(900px 600px at 90% -5%, rgba(255,140,90,0.10), transparent 60%),
+    radial-gradient(900px 700px at -10% 90%, rgba(43,196,176,0.12), transparent 60%),
+    var(--bg);
   color: var(--text);
   min-height: 100dvh;
   overflow: hidden;
   position: relative;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
 
 button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
@@ -118,22 +147,13 @@ a { color: var(--teal); }
 .bg-overlay {
   position: absolute;
   inset: 0;
+  /* scrim-top: blend header area with glass */
   background: linear-gradient(
-    to bottom,
-    rgba(19, 22, 43, 0.3) 0%,
-    rgba(19, 22, 43, 0.1) 40%,
-    rgba(19, 22, 43, 0.5) 80%,
-    rgba(19, 22, 43, 0.85) 100%
-  );
-}
-
-[data-theme="light"] .bg-overlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(238, 240, 248, 0.25) 0%,
-    rgba(238, 240, 248, 0.05) 40%,
-    rgba(238, 240, 248, 0.45) 80%,
-    rgba(238, 240, 248, 0.8) 100%
+    180deg,
+    var(--glass-strong) 0%,
+    transparent 22%,
+    transparent 65%,
+    var(--glass-strong) 100%
   );
 }
 
@@ -167,7 +187,7 @@ a { color: var(--teal); }
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0 16px calc(68px + 32px + var(--safe-bottom));
+  padding: 0 16px calc(76px + 14px + 20px + var(--safe-bottom));
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -196,57 +216,86 @@ a { color: var(--teal); }
   width: 100%;
 }
 
-/* ===== Glass Card ===== */
-.glass-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
+/* ===== SVG icon base ===== */
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: block;
+}
+svg.nav-icon, .nav-icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; display: block; }
+
+/* ===== Glass Card (reference: .card / .glass-card) ===== */
+.glass-card, .card {
+  background: var(--glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--chrome-border);
+  border-radius: var(--radius-md);
+  padding: 15px;
   box-shadow: var(--shadow-card);
 }
+.glass-card + .glass-card, .card + .card { margin-top: 12px; }
 
-/* ===== Bottom Navigation ===== */
-.bottom-nav {
-  position: fixed;
-  bottom: calc(20px + var(--safe-bottom));
-  left: 16px;
-  right: 16px;
-  z-index: 100;
-  height: 68px;
+/* Reference .card as flex row */
+.card {
   display: flex;
   align-items: center;
-  padding: 0 8px;
-  background: rgba(14, 16, 35, 0.88) !important;
-  border: 1px solid var(--border);
-  border-radius: 34px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  gap: 13px;
 }
-
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  color: var(--text-muted);
-  transition: color 0.2s ease, transform 0.15s ease;
-  padding: 4px 2px;
-}
-
-.nav-item.active {
-  color: var(--text);
-}
-
-.nav-item:active { transform: scale(0.88); }
-
-.nav-icon-wrap {
+.card__icon {
   width: 44px;
   height: 44px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.card__body { flex: 1; min-width: 0; }
+.card__title { font-weight: 700; font-size: 14.5px; margin-bottom: 2px; color: var(--chrome-text); }
+.card__meta { font-size: 12.5px; color: var(--chrome-text-dim); }
+.card__value { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--chrome-text); white-space: nowrap; }
+
+/* ===== Bottom Navigation (reference: .tabbar) ===== */
+.bottom-nav, .tabbar {
+  position: fixed;
+  left: 14px;
+  right: 14px;
+  bottom: calc(14px + var(--safe-bottom));
+  background: var(--glass-strong);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--chrome-border);
+  border-radius: 26px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 16px 30px -14px rgba(0,0,0,0.5);
+  z-index: 100;
+}
+
+/* tabbar items */
+.tabbar__item, .nav-item {
+  color: var(--chrome-text-faint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s;
+}
+.tabbar__item:active, .nav-item:active { transform: scale(0.88); }
+
+.tabbar__icon-wrap, .nav-icon-wrap {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -254,26 +303,16 @@ a { color: var(--teal); }
   transition: background 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.nav-item.active .nav-icon-wrap {
-  background: var(--teal);
-  box-shadow: 0 4px 16px rgba(43, 196, 176, 0.35);
+.tabbar__item.is-active .tabbar__icon-wrap,
+.nav-item.is-active .nav-icon-wrap {
+  background: var(--accent);
+  box-shadow: 0 4px 14px rgba(43,196,176,0.35);
 }
-
-.nav-icon {
-  width: 22px;
-  height: 22px;
-  color: inherit;
-}
-
-.nav-item.active .nav-icon-wrap .nav-icon {
+.tabbar__item.is-active svg,
+.tabbar__item.is-active .nav-icon,
+.nav-item.is-active svg,
+.nav-item.is-active .nav-icon {
   color: #0E2420;
-}
-
-.nav-label {
-  font-size: 0.58rem;
-  font-weight: 600;
-  font-family: var(--font-body);
-  letter-spacing: 0.02em;
 }
 
 /* ===== Icon Buttons ===== */

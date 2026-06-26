@@ -50,15 +50,15 @@ export function getCurrentScreen() {
 }
 
 function updateNavHighlight(name) {
-  const navItems = document.querySelectorAll('.nav-item');
+  const navItems = document.querySelectorAll('.tabbar__item');
   navItems.forEach(item => {
-    item.classList.toggle('active', item.dataset.nav === name);
+    item.classList.toggle('is-active', item.dataset.nav === name);
   });
 
   // Show/hide bottom nav (hide for sub-screens)
   const nav = document.getElementById('bottom-nav');
   const isMainScreen = navScreens.includes(name);
-  nav.style.display = isMainScreen ? '' : 'none';
+  if (nav) nav.style.display = isMainScreen ? '' : 'none';
 }
 
 // Bind bottom nav items
