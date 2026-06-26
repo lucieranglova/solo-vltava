@@ -880,12 +880,18 @@
 
         <!-- Progress -->
         <div class="glass-card checklist-header-card">
-          <div class="progress-header">
-            <span class="progress-label">Celkový postup</span>
-            <span class="progress-pct font-display" id="checklist-total-pct">0%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill teal" id="checklist-total-bar" style="width:0%"></div>
+          <div class="checklist-progress-wrap">
+            <div class="checklist-ring-wrap">
+              <svg viewBox="0 0 80 80" class="checklist-ring" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="32" class="checklist-ring-track"/>
+                <circle cx="40" cy="40" r="32" class="checklist-ring-fill" id="checklist-ring-fill"/>
+              </svg>
+              <span class="checklist-ring-pct" id="checklist-total-pct">0%</span>
+            </div>
+            <div class="checklist-progress-text">
+              <span class="checklist-progress-title">Vybaveno</span>
+              <span class="checklist-progress-sub" id="checklist-items-count">0 / 0 položek</span>
+            </div>
           </div>
         </div>
 

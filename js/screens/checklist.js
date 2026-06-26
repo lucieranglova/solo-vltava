@@ -230,11 +230,15 @@ function updateTotalProgress() {
   const total = _items.length;
   const checked = _items.filter(i => i.checked).length;
   const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+  const circumference = 2 * Math.PI * 32; // r=32
 
   const pctEl = document.getElementById('checklist-total-pct');
-  const barEl = document.getElementById('checklist-total-bar');
+  const ringEl = document.getElementById('checklist-ring-fill');
+  const countEl = document.getElementById('checklist-items-count');
+
   if (pctEl) pctEl.textContent = pct + '%';
-  if (barEl) barEl.style.width = pct + '%';
+  if (countEl) countEl.textContent = `${checked} / ${total} položek`;
+  if (ringEl) ringEl.style.strokeDashoffset = circumference * (1 - pct / 100);
 }
 
 function escHtml(s) {
