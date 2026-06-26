@@ -1,4 +1,4 @@
-const CACHE_NAME = 'solo-vltava-v1';
+const CACHE_NAME = 'solo-vltava-v3';
 const BASE = '/solo-vltava';
 const STATIC_ASSETS = [
   `${BASE}/`,
@@ -10,7 +10,7 @@ const STATIC_ASSETS = [
   `${BASE}/js/firestore.js`,
   `${BASE}/js/router.js`,
   `${BASE}/js/illustrations.js`,
-  `${BASE}/js/screens/onboarding.js`,
+  `${BASE}/js/seed.js`,
   `${BASE}/js/screens/dashboard.js`,
   `${BASE}/js/screens/performance.js`,
   `${BASE}/js/screens/route.js`,
