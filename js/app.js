@@ -2,7 +2,6 @@ import { initFirebase } from './auth.js';
 import { registerScreen, navigateTo, initNavigation } from './router.js';
 import { startIllustrationCycle } from './illustrations.js';
 import { getRaceConfig } from './firestore.js';
-import { initOnboarding } from './screens/onboarding.js';
 import { initDashboard } from './screens/dashboard.js';
 import { initPerformance } from './screens/performance.js';
 import { initRoute } from './screens/route.js';
@@ -17,6 +16,7 @@ import { initWeather } from './screens/weather.js';
 import { initGallery } from './screens/gallery.js';
 import { initSettings } from './screens/settings.js';
 import { STRAVA_CLIENT_ID, STRAVA_REDIRECT_URI, FUNCTIONS_BASE_URL } from './firebase-config.js';
+import { seedIfNeeded } from './seed.js';
 
 // PWA registration
 if ('serviceWorker' in navigator) {
@@ -61,7 +61,6 @@ async function boot() {
     await initFirebase();
 
     // Register all screens
-    registerScreen('onboarding');
     registerScreen('dashboard', { init: initDashboard });
     registerScreen('performance', { init: initPerformance });
     registerScreen('route', { init: initRoute });
@@ -95,27 +94,18 @@ async function boot() {
       return;
     }
 
-    // Check if onboarding is needed
-    const config = await getRaceConfig();
-    if (!config) {
-      overlay.classList.add('hidden');
-      initOnboarding();
-      navigateTo('onboarding');
-    } else {
-      overlay.classList.add('hidden');
-      navigateTo('dashboard');
-    }
+    // Seed fixed data on first run, then go to dashboard
+    await seedIfNeeded();
+    overlay.classList.add('hidden');
+    navigateTo('dashboard');
 
   } catch (err) {
     console.error('Boot error:', err);
     overlay.classList.add('hidden');
     window.showToast('Chyba při spuštění. Zkontroluj Firebase konfiguraci.', 'error');
 
-    // Even on error, try to show something
-    setTimeout(() => {
-      initOnboarding();
-      navigateTo('onboarding');
-    }, 500);
+    // Even on error, try to show dashboard
+    setTimeout(() => navigateTo('dashboard'), 500);
   }
 }
 

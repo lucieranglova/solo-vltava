@@ -1,7 +1,43 @@
 import { navigateTo } from '../router.js';
 import { firebaseConfig } from '../firebase-config.js';
+import { saveProfile } from '../firestore.js';
+import { getCurrentUid } from '../auth.js';
 
 export function initSettings() {
+  // Kdo jsem
+  const nameInput = document.getElementById('profile-name-input');
+  const roleRunner = document.getElementById('profile-role-runner');
+  const roleSupport = document.getElementById('profile-role-support');
+  const saveProfileBtn = document.getElementById('save-profile-btn');
+
+  if (nameInput) {
+    nameInput.value = localStorage.getItem('profileName') || 'Vojtěch';
+  }
+  if (roleRunner && roleSupport) {
+    const savedRole = localStorage.getItem('profileRole') || 'runner';
+    roleRunner.classList.toggle('active', savedRole === 'runner');
+    roleSupport.classList.toggle('active', savedRole === 'support');
+    roleRunner.onclick = () => { roleRunner.classList.add('active'); roleSupport.classList.remove('active'); };
+    roleSupport.onclick = () => { roleSupport.classList.add('active'); roleRunner.classList.remove('active'); };
+  }
+  if (saveProfileBtn) {
+    saveProfileBtn.onclick = async () => {
+      const name = nameInput?.value.trim() || 'Vojtěch';
+      const role = roleSupport?.classList.contains('active') ? 'support' : 'runner';
+      localStorage.setItem('profileName', name);
+      localStorage.setItem('profileRole', role);
+      try {
+        await saveProfile(getCurrentUid(), {
+          name,
+          role,
+          avatarColor: role === 'runner' ? '#2BC4B0' : '#FF8C5A'
+        });
+        window.showToast('Profil uložen!', 'success');
+      } catch {
+        window.showToast('Profil uložen lokálně.', 'info');
+      }
+    };
+  }
   // Theme toggle
   const themeToggle = document.getElementById('theme-toggle');
   if (themeToggle) {

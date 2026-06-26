@@ -381,72 +381,6 @@
   <!-- Screens -->
   <main class="screens" id="screens">
 
-    <!-- ONBOARDING -->
-    <section class="screen" id="screen-onboarding" data-screen="onboarding">
-      <div class="onboarding-content">
-        <div class="onboarding-logo">
-          <svg class="logo-mountain" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M40 5L10 55H70L40 5Z" fill="url(#logo-grad)" stroke="#2BC4B0" stroke-width="1.5"/>
-            <path d="M25 55L40 28L55 55" fill="#2BC4B0" opacity="0.35"/>
-            <defs>
-              <linearGradient id="logo-grad" x1="40" y1="5" x2="40" y2="55" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#2BC4B0"/>
-                <stop offset="1" stop-color="#13162B"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <h1 class="onboarding-title">Solo Vltava</h1>
-        <p class="onboarding-subtitle">Průvodce přípravou a závodem</p>
-
-        <div class="onboarding-card glass-card">
-          <form id="onboarding-form">
-            <div class="form-group">
-              <label class="form-label">Jméno</label>
-              <input type="text" class="form-input" id="ob-name" placeholder="Tomáš / Jana" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Role</label>
-              <div class="role-selector">
-                <button type="button" class="role-btn active" data-role="runner">
-                  <span class="role-icon">🏃</span>
-                  <span>Běžec</span>
-                </button>
-                <button type="button" class="role-btn" data-role="support">
-                  <span class="role-icon">💙</span>
-                  <span>Support</span>
-                </button>
-              </div>
-            </div>
-            <hr class="divider">
-            <div class="form-group">
-              <label class="form-label">Název závodu</label>
-              <input type="text" class="form-input" id="ob-race-name" placeholder="Vltava Run" value="Vltava Run">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Datum závodu</label>
-              <input type="date" class="form-input" id="ob-race-date" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Místo startu</label>
-              <input type="text" class="form-input" id="ob-race-location" placeholder="Lipno nad Vltavou">
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Cíl km</label>
-                <input type="number" class="form-input" id="ob-target-km" placeholder="840" value="840" min="1">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Cíl m výšky</label>
-                <input type="number" class="form-input" id="ob-target-elev" placeholder="12000" value="12000" min="1">
-              </div>
-            </div>
-            <button type="submit" class="btn-primary btn-full">Začínáme →</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
     <!-- DASHBOARD -->
     <section class="screen" id="screen-dashboard" data-screen="dashboard">
       <div class="screen-header">
@@ -1212,6 +1146,24 @@
         <h2 class="screen-title">Nastavení</h2>
       </div>
       <div class="screen-scroll">
+        <div class="settings-section glass-card">
+          <div class="settings-title">Kdo jsem</div>
+          <div class="settings-row" style="flex-direction:column;align-items:stretch;gap:10px">
+            <input type="text" class="form-input" id="profile-name-input" placeholder="Vojtěch">
+            <div class="role-selector">
+              <button type="button" class="role-btn active" id="profile-role-runner">
+                <span class="role-icon">🏃</span>
+                <span>Běžec</span>
+              </button>
+              <button type="button" class="role-btn" id="profile-role-support">
+                <span class="role-icon">💙</span>
+                <span>Support</span>
+              </button>
+            </div>
+            <button class="btn-primary" id="save-profile-btn">Uložit</button>
+          </div>
+        </div>
+
         <div class="settings-section glass-card">
           <div class="settings-title">Vzhled</div>
           <div class="settings-row">
