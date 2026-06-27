@@ -120,6 +120,11 @@ function buildRouteSvg(segments) {
     const textFill = tried ? '#fff' : '#1A2050';
     const fsize = label.length > 1 ? 9 : 10;
     svg += `<text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central" font-family="Baloo 2" font-weight="800" font-size="${fsize}" fill="${textFill}">${label}</text>`;
+    const nextName = allPts[idx + 1]?.name;
+    if (nextName) {
+      const ly = (pt.y + r + 10).toFixed(1);
+      svg += `<text x="${cx}" y="${ly}" text-anchor="middle" font-family="Baloo 2" font-weight="700" font-size="8" fill="#fff" paint-order="stroke" stroke="#0B1330" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${nextName}</text>`;
+    }
   });
   // Klikací plochy navrch (jen uzly se segmentem)
   allPts.forEach(pt => {
