@@ -107,11 +107,11 @@ function buildRouteSvg(segments) {
     if (!seg.tried) return;
     svg += `<path d="${seg.d}" fill="none" stroke="#2BC4B0" stroke-width="3" stroke-linecap="round" stroke-dasharray="9 5" opacity="0.9"/>`;
   });
-  // Uzly s čísly — jednička je na startu (idx=0)
+  // Kroužek N = start segmentu N; tried barva a klik odpovídají segmentu startujícímu z bodu
   allPts.forEach((pt, idx) => {
     const label = String(idx + 1);
     const r = label.length > 1 ? 14 : 12;
-    const tried = !!pt.tried;
+    const tried = !!(allPts[idx + 1]?.tried);
     const cx = pt.x.toFixed(1), cy = pt.y.toFixed(1);
     svg += `<circle cx="${cx}" cy="${cy}" r="${r + 2.5}" fill="rgba(0,0,0,0.38)"/>`;
     const fill = tried ? '#2BC4B0' : 'rgba(255,255,255,0.97)';
@@ -120,16 +120,12 @@ function buildRouteSvg(segments) {
     const textFill = tried ? '#fff' : '#1A2050';
     const fsize = label.length > 1 ? 9 : 10;
     svg += `<text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central" font-family="Baloo 2" font-weight="800" font-size="${fsize}" fill="${textFill}">${label}</text>`;
-    const nextName = allPts[idx + 1]?.name;
-    if (nextName) {
-      const ly = (pt.y + r + 10).toFixed(1);
-      svg += `<text x="${cx}" y="${ly}" text-anchor="middle" font-family="Baloo 2" font-weight="700" font-size="8" fill="#fff" paint-order="stroke" stroke="#0B1330" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${nextName}</text>`;
-    }
   });
-  // Klikací plochy navrch (jen uzly se segmentem)
-  allPts.forEach(pt => {
-    if (!pt.id) return;
-    svg += `<circle class="map-hit" data-id="${pt.id}" cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="20" fill="transparent"/>`;
+  // Klikací plochy — kroužek N otevírá segment N (allPts[idx+1].id)
+  allPts.forEach((pt, idx) => {
+    const nextId = allPts[idx + 1]?.id;
+    if (!nextId) return;
+    svg += `<circle class="map-hit" data-id="${nextId}" cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="20" fill="transparent"/>`;
   });
   return svg;
 }
