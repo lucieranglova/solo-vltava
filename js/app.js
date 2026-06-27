@@ -87,15 +87,12 @@ function buildRouteSvg(segments) {
       svg += `<circle class="map-hit" data-id="${pt.id}" cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="18" fill="transparent"/>`;
     }
     if (idx === 0) return;
-    const name = pt.name || ('Úsek ' + idx);
-    const big = !!pt.isEnd;
-    const fsize = big ? 17 : (name.length > 13 ? 10.5 : 12.5);
+    const label = String(idx);
     const side = pt.x < MAP_CENTERX ? 1 : -1;
     const anchor = side === 1 ? 'start' : 'end';
-    let tx = pt.x + side * (r + 12);
-    tx = clampTextX(tx, anchor, estTextWidth(name, fsize));
-    const fillc = big ? (pt.tried ? '#2BC4B0' : '#FF8C5A') : '#fff';
-    svg += `<text x="${tx.toFixed(1)}" y="${(pt.y + 4).toFixed(1)}" font-family="Baloo 2" font-weight="${big ? 800 : 700}" font-size="${fsize}" fill="${fillc}" stroke="#0B1330" stroke-width="3" paint-order="stroke" text-anchor="${anchor}">${escapeXml(name)}</text>`;
+    let tx = pt.x + side * (r + 8);
+    tx = clampTextX(tx, anchor, estTextWidth(label, 11));
+    svg += `<text x="${tx.toFixed(1)}" y="${(pt.y + 4).toFixed(1)}" font-family="Baloo 2" font-weight="700" font-size="11" fill="rgba(247,248,252,0.85)" stroke="#0B1330" stroke-width="2.5" paint-order="stroke" text-anchor="${anchor}">${label}</text>`;
   });
   return svg;
 }
