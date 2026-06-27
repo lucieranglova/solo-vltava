@@ -67,41 +67,64 @@ function buildRouteSvg(segments) {
   }
 
   let svg = '';
-  // Cesty — stíny
+  // Řeka — tmavý okraj
   pathParts.forEach(seg => {
-    svg += `<path d="${seg.d}" fill="none" stroke="#0B1330" stroke-width="${seg.tried ? 11 : 8}" stroke-linecap="round" opacity="${seg.tried ? 0.32 : 0.22}"/>`;
+    svg += `<path d="${seg.d}" fill="none" stroke="#1A6090" stroke-width="46" stroke-linecap="round"/>`;
   });
-  // Cesty — barevné
+  // Řeka — hlavní voda
   pathParts.forEach(seg => {
-    if (seg.tried) {
-      svg += `<path d="${seg.d}" fill="none" stroke="#2BC4B0" stroke-width="7" stroke-linecap="round"/>`;
-      svg += `<path d="${seg.d}" fill="none" stroke="#F0E2C0" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="1 13" opacity="0.6"/>`;
-    } else {
-      svg += `<path d="${seg.d}" fill="none" stroke="#8A9A78" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="1 11" opacity="0.6"/>`;
-    }
+    svg += `<path d="${seg.d}" fill="none" stroke="#3A9CC8" stroke-width="36" stroke-linecap="round"/>`;
   });
-  // Uzly s čísly (idx=0 = prázdný start, přeskočíme)
+  // Řeka — světlejší vnitřek
+  pathParts.forEach(seg => {
+    svg += `<path d="${seg.d}" fill="none" stroke="#5ABCE4" stroke-width="24" stroke-linecap="round" opacity="0.7"/>`;
+  });
+  // Řeka — odlesk
+  pathParts.forEach(seg => {
+    svg += `<path d="${seg.d}" fill="none" stroke="#9AD8F4" stroke-width="7" stroke-linecap="round" opacity="0.22" stroke-dasharray="16 10"/>`;
+  });
+  // Travnatý břeh
+  pathParts.forEach(seg => {
+    svg += `<path d="${seg.d}" fill="none" stroke="#1C6A1E" stroke-width="22" stroke-linecap="round"/>`;
+  });
+  // Štěrková cesta — okraj (tmavší)
+  pathParts.forEach(seg => {
+    const col = seg.tried ? '#8A6A28' : '#5A5040';
+    svg += `<path d="${seg.d}" fill="none" stroke="${col}" stroke-width="15" stroke-linecap="round"/>`;
+  });
+  // Štěrková cesta — plocha
+  pathParts.forEach(seg => {
+    const col = seg.tried ? '#C8A450' : '#7A6A4A';
+    svg += `<path d="${seg.d}" fill="none" stroke="${col}" stroke-width="11" stroke-linecap="round"/>`;
+  });
+  // Štěrková cesta — střední odlesk
+  pathParts.forEach(seg => {
+    const col = seg.tried ? '#D8B86A' : '#8A7A58';
+    svg += `<path d="${seg.d}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" opacity="0.6"/>`;
+  });
+  // Vyzkoušené úseky — tyrkysový pruh (stopa běžce)
+  pathParts.forEach(seg => {
+    if (!seg.tried) return;
+    svg += `<path d="${seg.d}" fill="none" stroke="#2BC4B0" stroke-width="3" stroke-linecap="round" stroke-dasharray="9 5" opacity="0.9"/>`;
+  });
+  // Uzly s čísly — jednička je na startu (idx=0)
   allPts.forEach((pt, idx) => {
-    if (idx === 0) return;
-    const label = String(idx);
-    const r = label.length > 1 ? 13 : 11;
+    const label = String(idx + 1);
+    const r = label.length > 1 ? 14 : 12;
     const tried = !!pt.tried;
     const cx = pt.x.toFixed(1), cy = pt.y.toFixed(1);
-    // stín
-    svg += `<circle cx="${cx}" cy="${cy}" r="${r + 2}" fill="rgba(11,19,48,0.4)"/>`;
-    // kroužek
-    const fill = tried ? '#2BC4B0' : 'rgba(247,248,252,0.96)';
-    const stroke = tried ? 'rgba(255,255,255,0.35)' : 'rgba(56,65,112,0.4)';
-    svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
-    // číslo
-    const textFill = tried ? '#fff' : '#1A1F3A';
+    svg += `<circle cx="${cx}" cy="${cy}" r="${r + 2.5}" fill="rgba(0,0,0,0.38)"/>`;
+    const fill = tried ? '#2BC4B0' : 'rgba(255,255,255,0.97)';
+    const stroke = tried ? '#1A9C8C' : '#2A3A70';
+    svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;
+    const textFill = tried ? '#fff' : '#1A2050';
     const fsize = label.length > 1 ? 9 : 10;
     svg += `<text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central" font-family="Baloo 2" font-weight="800" font-size="${fsize}" fill="${textFill}">${label}</text>`;
   });
-  // Klikací plochy navrch
+  // Klikací plochy navrch (jen uzly se segmentem)
   allPts.forEach(pt => {
     if (!pt.id) return;
-    svg += `<circle class="map-hit" data-id="${pt.id}" cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="18" fill="transparent"/>`;
+    svg += `<circle class="map-hit" data-id="${pt.id}" cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="20" fill="transparent"/>`;
   });
   return svg;
 }
