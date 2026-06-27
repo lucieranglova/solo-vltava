@@ -67,9 +67,11 @@ function buildRouteSvg(segments) {
   }
 
   let svg = '';
+  // Cesty — stíny
   pathParts.forEach(seg => {
     svg += `<path d="${seg.d}" fill="none" stroke="#0B1330" stroke-width="${seg.tried ? 11 : 8}" stroke-linecap="round" opacity="${seg.tried ? 0.32 : 0.22}"/>`;
   });
+  // Cesty — barevné
   pathParts.forEach(seg => {
     if (seg.tried) {
       svg += `<path d="${seg.d}" fill="none" stroke="#2BC4B0" stroke-width="7" stroke-linecap="round"/>`;
@@ -78,21 +80,28 @@ function buildRouteSvg(segments) {
       svg += `<path d="${seg.d}" fill="none" stroke="#8A9A78" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="1 11" opacity="0.6"/>`;
     }
   });
+  // Uzly s čísly (idx=0 = prázdný start, přeskočíme)
   allPts.forEach((pt, idx) => {
-    const r = pt.isEnd ? 10 : 8;
-    const fill = pt.tried ? '#2BC4B0' : '#384170';
-    svg += `<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="${r}" fill="${fill}" stroke="#F7F8FC" stroke-width="2.5"/>`;
-    svg += `<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="${(r * 0.28).toFixed(1)}" fill="#F7F8FC"/>`;
-    if (pt.id) {
-      svg += `<circle class="map-hit" data-id="${pt.id}" cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="18" fill="transparent"/>`;
-    }
     if (idx === 0) return;
     const label = String(idx);
-    const side = pt.x < MAP_CENTERX ? 1 : -1;
-    const anchor = side === 1 ? 'start' : 'end';
-    let tx = pt.x + side * (r + 8);
-    tx = clampTextX(tx, anchor, estTextWidth(label, 11));
-    svg += `<text x="${tx.toFixed(1)}" y="${(pt.y + 4).toFixed(1)}" font-family="Baloo 2" font-weight="700" font-size="11" fill="rgba(247,248,252,0.85)" stroke="#0B1330" stroke-width="2.5" paint-order="stroke" text-anchor="${anchor}">${label}</text>`;
+    const r = label.length > 1 ? 13 : 11;
+    const tried = !!pt.tried;
+    const cx = pt.x.toFixed(1), cy = pt.y.toFixed(1);
+    // stín
+    svg += `<circle cx="${cx}" cy="${cy}" r="${r + 2}" fill="rgba(11,19,48,0.4)"/>`;
+    // kroužek
+    const fill = tried ? '#2BC4B0' : 'rgba(247,248,252,0.96)';
+    const stroke = tried ? 'rgba(255,255,255,0.35)' : 'rgba(56,65,112,0.4)';
+    svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`;
+    // číslo
+    const textFill = tried ? '#fff' : '#1A1F3A';
+    const fsize = label.length > 1 ? 9 : 10;
+    svg += `<text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central" font-family="Baloo 2" font-weight="800" font-size="${fsize}" fill="${textFill}">${label}</text>`;
+  });
+  // Klikací plochy navrch
+  allPts.forEach(pt => {
+    if (!pt.id) return;
+    svg += `<circle class="map-hit" data-id="${pt.id}" cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="18" fill="transparent"/>`;
   });
   return svg;
 }
