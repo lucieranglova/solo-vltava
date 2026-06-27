@@ -1,10 +1,7 @@
-import { db, ensureAuth, storage } from './firebase-init.js';
+import { db, ensureAuth } from './firebase-init.js';
 import {
-  doc, getDoc, setDoc, updateDoc, collection, addDoc, getDocs, query, orderBy, arrayUnion
+  doc, getDoc, setDoc, updateDoc, collection, addDoc, getDocs, query, orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import {
-  ref as sRef, uploadBytes, getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 /* ====================== KONFIGURACE ====================== */
 const STRAVA_CONNECT_FN_URL = "https://us-central1-solo-vltava.cloudfunctions.net/exchangeStravaCode";
@@ -14,6 +11,94 @@ const STRAVA_REDIRECT_URI   = window.location.origin + window.location.pathname;
 
 const VLTAVA_LENGTH_KM = 430;
 const EVEREST_HEIGHT_M = 8849;
+
+/* ====================== MAPA — geometrie ====================== */
+const MAP_VB_W = 340, MAP_VB_H = 1500, MAP_TOPPAD = 70, MAP_BOTPAD = 70;
+const MAP_CENTERX = 170, MAP_AMP = 78, MAP_FREQ = 4.6;
+
+function mapCoord(progress) {
+  const usableH = MAP_VB_H - MAP_TOPPAD - MAP_BOTPAD;
+  const y = MAP_TOPPAD + (1 - progress) * usableH;
+  const x = MAP_CENTERX + MAP_AMP * Math.sin(progress * MAP_FREQ * 2 * Math.PI);
+  return { x, y };
+}
+function estTextWidth(text, fontSize) { return text.length * fontSize * 0.56; }
+function clampTextX(x, anchor, width, margin = 8) {
+  if (anchor === 'start') { x = Math.min(x, MAP_VB_W - margin - width); x = Math.max(x, margin); }
+  else { x = Math.max(x, margin + width); x = Math.min(x, MAP_VB_W - margin); }
+  return x;
+}
+function escapeXml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function buildRouteSvg(segments) {
+  if (!segments.length) {
+    return '<text x="170" y="750" text-anchor="middle" fill="#fff" font-family="Nunito" font-size="14">Zatím žádné úseky — klikni na +</text>';
+  }
+  const totalKm = segments.reduce((s, seg) => s + (Number(seg.distanceKm) || 0), 0) || 1;
+  let cum = 0;
+  const points = segments.map(seg => {
+    cum += Number(seg.distanceKm) || 0;
+    const progress = cum / totalKm;
+    const { x, y } = mapCoord(progress);
+    return { ...seg, x, y, progress };
+  });
+  const s0 = mapCoord(0);
+  const allPts = [{ x: s0.x, y: s0.y, name: null, tried: points[0]?.tried, isEnd: true, id: null }, ...points];
+  allPts[allPts.length - 1].isEnd = true;
+
+  function crCubic(p0, p1, p2, p3) {
+    return {
+      cp1x: p1.x + (p2.x - p0.x) / 6, cp1y: p1.y + (p2.y - p0.y) / 6,
+      cp2x: p2.x - (p3.x - p1.x) / 6, cp2y: p2.y - (p3.y - p1.y) / 6,
+    };
+  }
+
+  const pathParts = [];
+  for (let i = 0; i < allPts.length - 1; i++) {
+    const p0 = allPts[i - 1] || allPts[i];
+    const p1 = allPts[i];
+    const p2 = allPts[i + 1];
+    const p3 = allPts[i + 2] || allPts[i + 1];
+    const { cp1x, cp1y, cp2x, cp2y } = crCubic(p0, p1, p2, p3);
+    pathParts.push({
+      d: `M${p1.x.toFixed(1)},${p1.y.toFixed(1)} C${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`,
+      tried: !!p2.tried,
+    });
+  }
+
+  let svg = '';
+  pathParts.forEach(seg => {
+    svg += `<path d="${seg.d}" fill="none" stroke="#0B1330" stroke-width="${seg.tried ? 11 : 8}" stroke-linecap="round" opacity="${seg.tried ? 0.32 : 0.22}"/>`;
+  });
+  pathParts.forEach(seg => {
+    if (seg.tried) {
+      svg += `<path d="${seg.d}" fill="none" stroke="#2BC4B0" stroke-width="7" stroke-linecap="round"/>`;
+      svg += `<path d="${seg.d}" fill="none" stroke="#F0E2C0" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="1 13" opacity="0.6"/>`;
+    } else {
+      svg += `<path d="${seg.d}" fill="none" stroke="#8A9A78" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="1 11" opacity="0.6"/>`;
+    }
+  });
+  allPts.forEach((pt, idx) => {
+    const r = pt.isEnd ? 10 : 8;
+    const fill = pt.tried ? '#2BC4B0' : '#384170';
+    svg += `<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="${r}" fill="${fill}" stroke="#F7F8FC" stroke-width="2.5"/>`;
+    svg += `<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="${(r * 0.28).toFixed(1)}" fill="#F7F8FC"/>`;
+    if (pt.id) {
+      svg += `<circle class="map-hit" data-id="${pt.id}" cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="18" fill="transparent"/>`;
+    }
+    if (idx === 0) return;
+    const name = pt.name || ('Úsek ' + idx);
+    const big = !!pt.isEnd;
+    const fsize = big ? 17 : (name.length > 13 ? 10.5 : 12.5);
+    const side = pt.x < MAP_CENTERX ? 1 : -1;
+    const anchor = side === 1 ? 'start' : 'end';
+    let tx = pt.x + side * (r + 12);
+    tx = clampTextX(tx, anchor, estTextWidth(name, fsize));
+    const fillc = big ? (pt.tried ? '#2BC4B0' : '#FF8C5A') : '#fff';
+    svg += `<text x="${tx.toFixed(1)}" y="${(pt.y + 4).toFixed(1)}" font-family="Baloo 2" font-weight="${big ? 800 : 700}" font-size="${fsize}" fill="${fillc}" stroke="#0B1330" stroke-width="3" paint-order="stroke" text-anchor="${anchor}">${escapeXml(name)}</text>`;
+  });
+  return svg;
+}
 
 /* ====================== DATA LAYER ====================== */
 const raceConfigRef = doc(db, 'raceConfig', 'main');
@@ -110,16 +195,15 @@ function countUp(el, target, duration = 1000) {
   requestAnimationFrame(tick);
 }
 function escHtml(str) {
-  return String(str || '')
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 /* ====================== NAVIGACE ====================== */
-const TAB_SCREENS = ['dashboard', 'vykony', 'trasa', 'organizace', 'galerie'];
+const TAB_SCREENS = ['dashboard', 'vykony', 'trasa', 'organizace'];
 const ALL_SCREENS = [...TAB_SCREENS, 'onboarding', 'segment', 'checklist', 'kontakty', 'kronika', 'nastaveni'];
 const TITLES = {
   dashboard: 'Solo Vltava', vykony: 'Moje výkony', trasa: 'Trasa', organizace: 'Organizace',
-  galerie: 'Galerie', segment: 'Detail úseku', checklist: 'Checklist', kontakty: 'Kontakty',
+  segment: 'Detail úseku', checklist: 'Checklist', kontakty: 'Kontakty',
   kronika: 'Kronika', nastaveni: 'Nastavení', onboarding: 'Vítej'
 };
 let navStack = ['dashboard'];
@@ -127,15 +211,19 @@ let navStack = ['dashboard'];
 function showScreen(id, opts = {}) {
   ALL_SCREENS.forEach(s => { const el = document.getElementById('screen-' + s); if (el) el.hidden = (s !== id); });
   document.querySelectorAll('.tabbar__item').forEach(el => el.classList.toggle('is-active', el.dataset.nav === id));
-  document.getElementById('header-title').textContent = TITLES[id] || 'Solo Vltava';
+
+  document.querySelector('.app-header').hidden = (id === 'trasa');
+
   const isRoot = TAB_SCREENS.includes(id) || id === 'onboarding';
-  document.getElementById('back-btn').classList.toggle('is-ghost', isRoot);
-  document.getElementById('fab').hidden = !(id === 'trasa');
+  document.getElementById('back-btn').hidden = isRoot;
+  document.getElementById('header-title').textContent = TITLES[id] || 'Solo Vltava';
+  document.getElementById('fab').hidden = (id !== 'trasa');
+
   if (!opts.skipStack) {
     if (TAB_SCREENS.includes(id)) navStack = [id];
     else navStack.push(id);
   }
-  document.querySelector('main.app-main').scrollTo(0, 0);
+  if (id !== 'trasa') document.querySelector('main.app-main').scrollTo(0, 0);
 
   if (id === 'dashboard') renderDashboard();
   if (id === 'vykony') renderVykony();
@@ -144,6 +232,7 @@ function showScreen(id, opts = {}) {
   if (id === 'kontakty') renderContacts();
   if (id === 'kronika') renderKronika();
 }
+
 function goBack() {
   navStack.pop();
   showScreen(navStack[navStack.length - 1] || 'dashboard', { skipStack: true });
@@ -174,7 +263,7 @@ async function renderDashboard() {
 }
 
 function updateVltavaMap(segments) {
-  const coveredKm = segments.filter(s => s.tried).reduce((sum, s) => sum + (s.distanceKm || 0), 0);
+  const coveredKm = segments.filter(s => s.tried).reduce((sum, s) => sum + (Number(s.distanceKm) || 0), 0);
   const pct = Math.min(1, coveredKm / VLTAVA_LENGTH_KM);
 
   const progressPath = document.getElementById('river-progress');
@@ -189,13 +278,9 @@ function updateVltavaMap(segments) {
     progressPath.style.strokeDashoffset = len * (1 - pct);
   });
 
-  // Color waypoints that have been passed
-  const tried = segments.filter(s => s.tried).length;
-  const total = segments.length;
-  document.querySelectorAll('.river-waypoint').forEach((dot, i) => {
+  document.querySelectorAll('.river-waypoint').forEach(dot => {
     const order = parseInt(dot.dataset.order, 10);
-    const passed = total > 0 && order / 12 <= pct;
-    dot.style.fill = passed ? 'var(--accent)' : 'rgba(247,248,252,0.4)';
+    dot.style.fill = order / 12 <= pct ? 'var(--accent)' : 'rgba(247,248,252,0.35)';
   });
 }
 
@@ -221,6 +306,7 @@ async function renderVykony() {
   animateFace('front');
   if (flipped) animateFace('back');
 }
+
 function animateFace(face) {
   const root = document.querySelector('.stat-face--' + face);
   if (!root) return;
@@ -229,6 +315,7 @@ function animateFace(face) {
   const fillRect = root.querySelector('.fill-rect');
   requestAnimationFrame(() => { fillRect.style.transform = 'scaleY(1)'; });
 }
+
 function doFlip() {
   flipped = !flipped;
   document.getElementById('flipInner').classList.toggle('is-flipped', flipped);
@@ -255,134 +342,60 @@ async function syncStrava() {
   }
 }
 
-/* ====================== TRASA ====================== */
+/* ====================== TRASA (mapa) ====================== */
 async function renderTrasa() {
   const segs = await Segments.list();
   const tried = segs.filter(s => s.tried).length;
-  document.getElementById('trasa-summary').textContent = `${tried}/${segs.length} úseků vyzkoušeno`;
-  const list = document.getElementById('trasa-list');
-  list.innerHTML = '';
-  if (!segs.length) {
-    list.innerHTML = '<div class="empty-state">Žádné úseky. Klikni + pro přidání.</div>';
-    return;
-  }
-  segs.forEach(seg => {
-    const el = document.createElement('div');
-    el.className = 'card is-clickable';
-    const iconStyle = seg.tried ? 'background:var(--accent-soft);color:var(--accent)' : '';
-    el.innerHTML = `
-      <div class="card__icon" style="${iconStyle}"><svg class="icon"><use href="#i-mountain"/></svg></div>
-      <div class="card__body">
-        <div class="card__title">${escHtml(seg.name)}</div>
-        <div class="card__meta">${seg.distanceKm ? seg.distanceKm + ' km' : '—'}${seg.elevationM ? ' · ' + seg.elevationM + ' m' : ''}${seg.tried ? ' · ✓ vyzkoušeno' : ''}</div>
-      </div>
-      <svg class="icon" style="color:var(--chrome-text-faint)"><use href="#i-chevron-right"/></svg>`;
-    el.addEventListener('click', () => {
-      showScreen('segment');
-      renderSegment(seg);
-    });
-    list.appendChild(el);
-  });
+  document.getElementById('trasaCount').textContent = `${tried} / ${segs.length} úseků`;
+  document.getElementById('trasaOverlay').innerHTML = buildRouteSvg(segs);
 }
 
-function renderSegment(seg) {
-  const detail = document.getElementById('segment-detail');
-  const dots = [1, 2, 3, 4, 5].map(i =>
-    `<span class="${i <= (seg.difficulty || 0) ? 'is-filled' : ''}"></span>`
-  ).join('');
+async function addSegmentPrompt() {
+  const name = prompt('Název úseku:');
+  if (!name) return;
+  const distanceKm = Number(prompt('Délka (km):', 10)) || 0;
+  const segs = await Segments.list();
+  await Segments.add({ name, distanceKm, elevationGainM: 0, elevationLossM: 0, difficulty: 3, tried: false, notes: '', orderIndex: segs.length });
+  toast('Úsek přidán ✓');
+  renderTrasa();
+}
 
-  const photosHtml = (seg.photos || []).map(url =>
-    `<div class="photo-thumb" style="background-image:url('${escHtml(url)}')"></div>`
-  ).join('');
-
-  detail.innerHTML = `
-    <div class="elevation-card">
-      <svg viewBox="0 0 300 84" preserveAspectRatio="none">
-        <path d="M0,80 L60,40 L110,60 L160,10 L220,50 L280,25 L300,50 L300,84 L0,84 Z"
-          fill="rgba(43,196,176,0.18)" stroke="var(--accent)" stroke-width="1.5"/>
-      </svg>
-    </div>
+async function openSegment(id) {
+  const segs = await Segments.list();
+  const seg = segs.find(s => s.id === id);
+  if (!seg) return;
+  showScreen('segment');
+  const el = document.getElementById('segment-detail');
+  el.innerHTML = `
+    <div class="section-title">${escHtml(seg.name)}</div>
     <div class="stats-row">
-      <div class="stat-box"><div class="stat-box__label">Délka</div><div class="stat-box__value">${seg.distanceKm || '—'} km</div></div>
-      <div class="stat-box"><div class="stat-box__label">Převýšení</div><div class="stat-box__value">${seg.elevationM || '—'} m</div></div>
-      <div class="stat-box"><div class="stat-box__label">Obtížnost</div><div class="difficulty-dots">${dots}</div></div>
+      <div class="stat-box"><div class="stat-box__label">Délka</div><div class="stat-box__value">${seg.distanceKm} km</div></div>
+      <div class="stat-box"><div class="stat-box__label">Převýšení</div><div class="stat-box__value">+${seg.elevationGainM || seg.elevationM || 0} m</div></div>
+      <div class="stat-box"><div class="stat-box__label">Obtížnost</div><div class="stat-box__value">${seg.difficulty || 0}/5</div></div>
     </div>
-    <button class="cta-button${seg.tried ? ' is-secondary' : ''}" id="seg-tried-btn">
-      ${seg.tried ? '✓ Označeno jako vyzkoušeno' : 'Označit jako vyzkoušeno'}
-    </button>
-
-    <div class="card card--column">
-      <div class="card__title">Poznámky</div>
-      <textarea class="seg-notes" id="seg-notes" placeholder="Jak to bylo, co si pamatuješ…">${escHtml(seg.notes || '')}</textarea>
-      <button class="cta-button is-secondary" id="save-notes-btn">Uložit poznámky</button>
+    <div class="toggle-card">
+      <div><div class="toggle-card__label">Vyzkoušeno</div><div class="toggle-card__sub" id="seg-tried-date">${seg.triedDate || 'zatím ne'}</div></div>
+      <div class="switch${seg.tried ? ' is-on' : ''}" id="seg-toggle"></div>
     </div>
+    <div class="field"><label>Poznámky</label><textarea id="seg-notes" rows="5">${escHtml(seg.notes || '')}</textarea></div>
+    <button class="cta-button is-secondary" id="seg-save">Uložit poznámky</button>`;
 
-    <div class="card card--column">
-      <div class="card__title">Fotky</div>
-      <div class="photo-grid" id="seg-photo-grid">${photosHtml || ''}</div>
-      ${!seg.photos?.length ? '<p class="card__meta" style="margin:0;font-size:12px">Zatím žádné fotky.</p>' : ''}
-      <label class="upload-label">
-        <svg class="icon" width="15" height="15"><use href="#i-plus"/></svg>
-        Přidat fotku
-        <input type="file" accept="image/*" id="seg-photo-input" multiple style="display:none">
-      </label>
-    </div>`;
+  document.getElementById('seg-toggle').addEventListener('click', async e => {
+    const newVal = !seg.tried;
+    e.currentTarget.classList.toggle('is-on', newVal);
+    const date = newVal ? new Date().toLocaleDateString('cs-CZ') : null;
+    await Segments.update(id, { tried: newVal, triedDate: date });
+    document.getElementById('seg-tried-date').textContent = date || 'zatím ne';
+    seg.tried = newVal;
+    seg.triedDate = date;
+  });
 
-  // Notes: auto-save on blur + explicit save button
-  const notesEl = document.getElementById('seg-notes');
-  const saveNotes = async () => {
-    const val = notesEl.value;
-    if (val === (seg.notes || '')) return;
-    await Segments.update(seg.id, { notes: val });
-    seg.notes = val;
-  };
-  document.getElementById('save-notes-btn').addEventListener('click', async () => {
-    await saveNotes();
+  document.getElementById('seg-save').addEventListener('click', async () => {
+    const notes = document.getElementById('seg-notes').value;
+    await Segments.update(id, { notes });
+    seg.notes = notes;
     toast('Poznámky uloženy ✓');
   });
-  notesEl.addEventListener('blur', saveNotes);
-
-  // Tried button
-  document.getElementById('seg-tried-btn').addEventListener('click', async () => {
-    await saveNotes();
-    const newVal = !seg.tried;
-    await Segments.update(seg.id, { tried: newVal });
-    toast(newVal ? 'Úsek označen jako vyzkoušený ✓' : 'Úsek odznačen');
-    seg.tried = newVal;
-    renderSegment(seg);
-    renderTrasa();
-  });
-
-  // Photo upload
-  document.getElementById('seg-photo-input').addEventListener('change', async (e) => {
-    const files = Array.from(e.target.files);
-    for (const file of files) {
-      toast('Nahrávám foto…');
-      try {
-        const url = await uploadPhoto(seg.id, file);
-        seg.photos = [...(seg.photos || []), url];
-        const grid = document.getElementById('seg-photo-grid');
-        if (grid) {
-          const thumb = document.createElement('div');
-          thumb.className = 'photo-thumb';
-          thumb.style.backgroundImage = `url('${url}')`;
-          grid.appendChild(thumb);
-        }
-        toast('Foto přidáno ✓');
-      } catch (err) {
-        toast('Chyba: ' + err.message);
-      }
-    }
-    e.target.value = '';
-  });
-}
-
-async function uploadPhoto(segmentId, file) {
-  const photoRef = sRef(storage, `segments/${segmentId}/${Date.now()}_${file.name}`);
-  const snap = await uploadBytes(photoRef, file);
-  const url = await getDownloadURL(snap.ref);
-  await updateDoc(doc(db, 'routeSegments', segmentId), { photos: arrayUnion(url) });
-  return url;
 }
 
 /* ====================== CHECKLIST ====================== */
@@ -392,7 +405,7 @@ async function renderChecklist() {
   content.innerHTML = '';
   const cats = await Checklist.listCategories(checklistOwner);
   if (!cats.length) {
-    content.innerHTML = '<div class="empty-state">Zatím žádné kategorie.</div>';
+    content.innerHTML = '<div class="empty-state">Žádné kategorie. Přidej první položku tlačítkem níže.</div>';
     return;
   }
   for (const cat of cats) {
@@ -488,8 +501,15 @@ async function init() {
   });
 
   document.getElementById('back-btn').addEventListener('click', goBack);
+  document.getElementById('mapBackBtn').addEventListener('click', () => showScreen('dashboard'));
   document.getElementById('settings-btn').addEventListener('click', () => showScreen('nastaveni'));
   document.getElementById('theme-switch').addEventListener('click', toggleTheme);
+  document.getElementById('fab').addEventListener('click', addSegmentPrompt);
+
+  document.getElementById('trasaOverlay').addEventListener('click', e => {
+    const hit = e.target.closest('.map-hit');
+    if (hit?.dataset.id) openSegment(hit.dataset.id);
+  });
 
   document.getElementById('arrowLeft').addEventListener('click', () => { if (flipped) doFlip(); });
   document.getElementById('arrowRight').addEventListener('click', () => { if (!flipped) doFlip(); });
@@ -504,6 +524,7 @@ async function init() {
   });
 
   document.getElementById('syncBtn').addEventListener('click', syncStrava);
+  document.getElementById('stravaConnectBtn').addEventListener('click', connectStrava);
 
   document.getElementById('editKmRow').addEventListener('click', async () => {
     const val = prompt('Celkové km (naběháno):');
@@ -511,6 +532,15 @@ async function init() {
     const km = parseFloat(val.replace(',', '.'));
     if (isNaN(km)) return toast('Neplatná hodnota');
     await Stats.set({ totalKm: km, source: 'manual' });
+    toast('Uloženo ✓');
+    renderVykony();
+  });
+  document.getElementById('editElevBtn').addEventListener('click', async () => {
+    const val = prompt('Celkové nastoupáno (m):');
+    if (val === null) return;
+    const m = parseFloat(val.replace(',', '.'));
+    if (isNaN(m)) return toast('Neplatná hodnota');
+    await Stats.set({ totalElevationM: m, source: 'manual' });
     toast('Uloženo ✓');
     renderVykony();
   });
@@ -524,19 +554,6 @@ async function init() {
     renderVykony();
   });
 
-  document.getElementById('stravaConnectBtn').addEventListener('click', connectStrava);
-
-  document.getElementById('fab').addEventListener('click', async () => {
-    const name = prompt('Název nového úseku:');
-    if (!name) return;
-    const km = parseFloat(prompt('Délka (km):') || '0');
-    const elev = parseInt(prompt('Převýšení (m):') || '0', 10);
-    const segs = await Segments.list();
-    await Segments.add({ name, distanceKm: km, elevationM: elev, difficulty: 3, tried: false, orderIndex: segs.length });
-    toast('Úsek přidán ✓');
-    renderTrasa();
-  });
-
   document.querySelectorAll('#checklist-tabs button').forEach(btn => {
     btn.addEventListener('click', () => {
       checklistOwner = btn.dataset.owner;
@@ -544,7 +561,6 @@ async function init() {
       renderChecklist();
     });
   });
-
   document.getElementById('addChecklistItemBtn').addEventListener('click', async () => {
     const itemName = prompt('Název položky:');
     if (!itemName) return;
@@ -559,7 +575,6 @@ async function init() {
     toast('Položka přidána ✓');
     renderChecklist();
   });
-
   document.getElementById('addContactBtn').addEventListener('click', async () => {
     const name = prompt('Jméno:');
     if (!name) return;
