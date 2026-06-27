@@ -230,71 +230,89 @@
       <div class="map-stack">
         <svg class="map-bg" viewBox="0 0 340 1500" preserveAspectRatio="xMidYMid slice">
           <defs>
-            <!-- Vzor stromů A: velké listnaté + borovice -->
-            <pattern id="tp1" x="0" y="0" width="112" height="140" patternUnits="userSpaceOnUse">
-              <circle cx="28" cy="32" r="20" fill="#153F15" opacity="0.45"/>
-              <circle cx="28" cy="32" r="17" fill="#1D5C1C"/>
-              <circle cx="28" cy="32" r="11" fill="#28821A"/>
-              <circle cx="28" cy="32" r="6"  fill="#38A828"/>
-              <circle cx="28" cy="32" r="3"  fill="#52CC42" opacity="0.55"/>
-              <circle cx="90" cy="18" r="12" fill="#0C360C" opacity="0.45"/>
-              <circle cx="90" cy="18" r="10" fill="#165018"/>
-              <circle cx="90" cy="18" r="6"  fill="#1E7022"/>
-              <circle cx="6"  cy="90" r="8"  fill="#1A5C1A" opacity="0.5"/>
-              <circle cx="6"  cy="90" r="5"  fill="#267226"/>
-              <circle cx="80" cy="100" r="18" fill="#133813" opacity="0.45"/>
-              <circle cx="80" cy="100" r="15" fill="#1C5420"/>
-              <circle cx="80" cy="100" r="9"  fill="#267024"/>
-              <circle cx="80" cy="100" r="5"  fill="#329230"/>
-              <circle cx="44" cy="122" r="13" fill="#0A3A0A" opacity="0.45"/>
-              <circle cx="44" cy="122" r="11" fill="#145C18"/>
-              <circle cx="44" cy="122" r="6"  fill="#1C7820"/>
-              <circle cx="105" cy="68" r="7"  fill="#1C5C1C" opacity="0.5"/>
-              <circle cx="105" cy="68" r="4"  fill="#2A7828"/>
+            <!--
+              Stromy s 3/4 perspektivou: stín na zemi (elipsa dole+vpravo),
+              kmen viditelný pod korunou, highlight vlevo nahoře = dojem světla shora-vlevo.
+            -->
+            <pattern id="tp1" x="0" y="0" width="112" height="142" patternUnits="userSpaceOnUse">
+              <!-- Velký listnatý, střed koruny (30, 27) -->
+              <ellipse cx="34" cy="51" rx="14" ry="5"  fill="rgba(0,0,0,0.32)"/>
+              <rect x="27" y="43" width="6"  height="10" rx="2" fill="#5A3018"/>
+              <circle cx="30" cy="27" r="19" fill="#163412"/>
+              <circle cx="30" cy="27" r="15" fill="#1E5A18"/>
+              <circle cx="25" cy="22" r="10" fill="#2C8022"/>
+              <circle cx="22" cy="19" r="5"  fill="#40A030" opacity="0.8"/>
+              <!-- Borovice, střed (90, 15) -->
+              <ellipse cx="94" cy="36" rx="9"  ry="3.5" fill="rgba(0,0,0,0.28)"/>
+              <rect x="88" y="28" width="4"  height="9"  rx="1" fill="#4A2C12"/>
+              <circle cx="90" cy="15" r="14" fill="#0C380C"/>
+              <circle cx="90" cy="15" r="11" fill="#165A18"/>
+              <circle cx="87" cy="11" r="6"  fill="#1E7820" opacity="0.9"/>
+              <circle cx="85" cy="9"  r="3"  fill="#30A028" opacity="0.65"/>
+              <!-- Keř, střed (7, 86) -->
+              <ellipse cx="10" cy="98" rx="9"  ry="3.5" fill="rgba(0,0,0,0.25)"/>
+              <circle cx="7"  cy="86" r="11" fill="#185016"/>
+              <circle cx="7"  cy="86" r="8"  fill="#247222"/>
+              <circle cx="4"  cy="83" r="5"  fill="#309228" opacity="0.8"/>
+              <!-- Střední listnatý, střed (79, 97) -->
+              <ellipse cx="83" cy="118" rx="12" ry="4.5" fill="rgba(0,0,0,0.3)"/>
+              <rect x="76" y="110" width="5"  height="9"  rx="2" fill="#5A3018"/>
+              <circle cx="79" cy="97" r="16" fill="#163412"/>
+              <circle cx="79" cy="97" r="12" fill="#205A18"/>
+              <circle cx="75" cy="93" r="8"  fill="#2E8022" opacity="0.9"/>
+              <circle cx="72" cy="90" r="4"  fill="#42A02E" opacity="0.7"/>
+              <!-- Borovice, střed (46, 122) -->
+              <ellipse cx="50" cy="140" rx="8"  ry="3"   fill="rgba(0,0,0,0.25)"/>
+              <rect x="44" y="133" width="4"  height="8"  rx="1" fill="#4A2C12"/>
+              <circle cx="46" cy="122" r="13" fill="#0C380C"/>
+              <circle cx="46" cy="122" r="10" fill="#165A18"/>
+              <circle cx="43" cy="119" r="5"  fill="#1E7820" opacity="0.85"/>
+              <!-- Malý keř, střed (106, 66) -->
+              <ellipse cx="109" cy="76" rx="8"  ry="3"   fill="rgba(0,0,0,0.22)"/>
+              <circle cx="106" cy="66" r="9"  fill="#1A5016"/>
+              <circle cx="106" cy="66" r="6"  fill="#268024"/>
+              <circle cx="103" cy="63" r="3"  fill="#34A02A" opacity="0.75"/>
             </pattern>
-            <!-- Vzor stromů B: jiné rozložení, lehce posunutý -->
-            <pattern id="tp2" x="40" y="56" width="96" height="118" patternUnits="userSpaceOnUse">
-              <circle cx="16" cy="20" r="14" fill="#0E3A0E" opacity="0.45"/>
-              <circle cx="16" cy="20" r="11" fill="#184A1A"/>
-              <circle cx="16" cy="20" r="7"  fill="#226222"/>
-              <circle cx="66" cy="14" r="9"  fill="#185A18" opacity="0.5"/>
-              <circle cx="66" cy="14" r="6"  fill="#247224"/>
-              <circle cx="66" cy="14" r="3"  fill="#329632"/>
-              <circle cx="52" cy="66" r="19" fill="#133A13" opacity="0.45"/>
-              <circle cx="52" cy="66" r="16" fill="#1C5A1E"/>
-              <circle cx="52" cy="66" r="10" fill="#267826"/>
-              <circle cx="52" cy="66" r="6"  fill="#329A32"/>
-              <circle cx="52" cy="66" r="2"  fill="#46BC40" opacity="0.6"/>
-              <circle cx="8"  cy="82" r="8"  fill="#112011" opacity="0.45"/>
-              <circle cx="8"  cy="82" r="6"  fill="#1A4C1E"/>
-              <circle cx="82" cy="92" r="14" fill="#153A15" opacity="0.45"/>
-              <circle cx="82" cy="92" r="11" fill="#205E20"/>
-              <circle cx="82" cy="92" r="7"  fill="#2A7828"/>
-            </pattern>
-            <!-- Vzor C: drobné keře, hustší -->
-            <pattern id="tp3" x="22" y="18" width="68" height="82" patternUnits="userSpaceOnUse">
-              <circle cx="12" cy="14" r="6"  fill="#1E5A1E" opacity="0.5"/>
-              <circle cx="12" cy="14" r="3"  fill="#2E7A2A"/>
-              <circle cx="50" cy="28" r="9"  fill="#124012" opacity="0.45"/>
-              <circle cx="50" cy="28" r="7"  fill="#1A5E1A"/>
-              <circle cx="50" cy="28" r="4"  fill="#248024"/>
-              <circle cx="28" cy="58" r="7"  fill="#1A521A" opacity="0.45"/>
-              <circle cx="28" cy="58" r="4"  fill="#267226"/>
-              <circle cx="60" cy="68" r="5"  fill="#206020" opacity="0.5"/>
-              <circle cx="60" cy="68" r="3"  fill="#2E7E2A"/>
-              <circle cx="5"  cy="48" r="5"  fill="#1C5C1C" opacity="0.45"/>
-              <circle cx="5"  cy="48" r="3"  fill="#287028"/>
+
+            <pattern id="tp2" x="42" y="58" width="94" height="116" patternUnits="userSpaceOnUse">
+              <!-- Borovice, střed (17, 18) -->
+              <ellipse cx="21" cy="38" rx="9"  ry="3.5" fill="rgba(0,0,0,0.28)"/>
+              <rect x="15" y="30" width="4"  height="9"  rx="1" fill="#4A2C12"/>
+              <circle cx="17" cy="18" r="14" fill="#0C380C"/>
+              <circle cx="17" cy="18" r="11" fill="#165A18"/>
+              <circle cx="14" cy="14" r="6"  fill="#1E7820" opacity="0.9"/>
+              <!-- Keř, střed (66, 13) -->
+              <ellipse cx="69" cy="24" rx="8"  ry="3"   fill="rgba(0,0,0,0.22)"/>
+              <circle cx="66" cy="13" r="10" fill="#185016"/>
+              <circle cx="66" cy="13" r="7"  fill="#247022"/>
+              <circle cx="63" cy="10" r="4"  fill="#309228" opacity="0.8"/>
+              <!-- Velký listnatý, střed (52, 63) -->
+              <ellipse cx="56" cy="86" rx="14" ry="5"   fill="rgba(0,0,0,0.32)"/>
+              <rect x="49" y="78" width="6"  height="10" rx="2" fill="#5A3018"/>
+              <circle cx="52" cy="63" r="19" fill="#163412"/>
+              <circle cx="52" cy="63" r="15" fill="#1E5A18"/>
+              <circle cx="47" cy="58" r="10" fill="#2C8022"/>
+              <circle cx="44" cy="55" r="5"  fill="#40A030" opacity="0.8"/>
+              <!-- Malý keř, střed (9, 80) -->
+              <ellipse cx="12" cy="90" rx="7"  ry="2.5" fill="rgba(0,0,0,0.2)"/>
+              <circle cx="9"  cy="80" r="9"  fill="#1A5016"/>
+              <circle cx="9"  cy="80" r="6"  fill="#268024"/>
+              <circle cx="6"  cy="77" r="3"  fill="#34A02A" opacity="0.7"/>
+              <!-- Střední listnatý, střed (82, 89) -->
+              <ellipse cx="86" cy="109" rx="11" ry="4.5" fill="rgba(0,0,0,0.28)"/>
+              <rect x="79" y="101" width="5"  height="9"  rx="2" fill="#5A3018"/>
+              <circle cx="82" cy="89" r="16" fill="#163412"/>
+              <circle cx="82" cy="89" r="12" fill="#205A18"/>
+              <circle cx="78" cy="85" r="7"  fill="#2E8022" opacity="0.9"/>
+              <circle cx="75" cy="82" r="4"  fill="#42A02E" opacity="0.65"/>
             </pattern>
           </defs>
 
-          <!-- Základní trávnatá plocha -->
-          <rect width="340" height="1500" fill="#2A6E24"/>
-          <!-- Světlejší střed (průsvit pod stromy) -->
-          <rect width="340" height="1500" fill="#32803A" opacity="0.35"/>
-          <!-- Vzory stromů -->
+          <!-- Základní trávník -->
+          <rect width="340" height="1500" fill="#2E7828"/>
+          <!-- Vzory stromů s izometrickým efektem -->
           <rect width="340" height="1500" fill="url(#tp1)"/>
-          <rect width="340" height="1500" fill="url(#tp2)" opacity="0.9"/>
-          <rect width="340" height="1500" fill="url(#tp3)" opacity="0.7"/>
+          <rect width="340" height="1500" fill="url(#tp2)" opacity="0.92"/>
         </svg>
 
         <svg class="map-overlay" id="trasaOverlay" viewBox="0 0 340 1500" preserveAspectRatio="xMidYMid slice"></svg>
