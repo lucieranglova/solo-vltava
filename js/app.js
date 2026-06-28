@@ -242,6 +242,8 @@ const TITLES = {
 let navStack = ['dashboard'];
 
 function showScreen(id, opts = {}) {
+  if (id !== 'trasa') document.querySelector('main.app-main').scrollTo(0, 0);
+
   ALL_SCREENS.forEach(s => { const el = document.getElementById('screen-' + s); if (el) el.hidden = (s !== id); });
   document.querySelectorAll('.tabbar__item').forEach(el => el.classList.toggle('is-active', el.dataset.nav === id));
 
@@ -256,7 +258,6 @@ function showScreen(id, opts = {}) {
     if (TAB_SCREENS.includes(id)) navStack = [id];
     else navStack.push(id);
   }
-  if (id !== 'trasa') document.querySelector('main.app-main').scrollTo(0, 0);
 
   if (id === 'dashboard') renderDashboard();
   if (id === 'seznam') renderSeznam();
