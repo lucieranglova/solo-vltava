@@ -612,10 +612,6 @@ main.app-main{
   display:flex;align-items:center;gap:14px;
   margin:-6px -18px 0;
   padding:calc(10px + env(safe-area-inset-top,0px)) 18px 16px;
-  background:linear-gradient(180deg,
-    rgba(11,15,34,0.92) 0%,
-    rgba(11,15,34,0.92) calc(env(safe-area-inset-top,0px) + 10px),
-    transparent 100%);
 }
 .map-header__back{
   width:34px;height:34px;border-radius:50%;
