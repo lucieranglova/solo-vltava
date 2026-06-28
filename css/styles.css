@@ -70,6 +70,7 @@ svg.icon{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stro
 .app-header__title{
   font-family:var(--font-display);font-weight:700;font-size:20px;
   color:var(--chrome-text);flex:1;
+  text-shadow:0 1px 12px rgba(0,0,0,0.45);
 }
 
 /* Back button / settings button */
@@ -85,12 +86,12 @@ svg.icon{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stro
 .icon-btn.is-ghost{display:none;}
 .icon-btn[hidden]{display:none;}
 
-/* ── Top scrim ── */
+/* ── Top scrim ── (only a thin vignette for legibility, not a full dark cover) */
 .scrim-top{
   position:fixed;
-  top:env(safe-area-inset-top,0px);
-  left:0;right:0;height:140px;
-  background:linear-gradient(180deg, var(--glass-strong), transparent);
+  top:0;left:0;right:0;
+  height:calc(env(safe-area-inset-top,0px) + 80px);
+  background:linear-gradient(180deg, rgba(0,0,0,0.22) 0%, transparent 100%);
   z-index:1;pointer-events:none;
 }
 
@@ -98,7 +99,7 @@ svg.icon{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stro
 main.app-main{
   position:relative;z-index:2;
   flex:1;overflow-y:auto;
-  padding:8px 18px 110px;
+  padding:8px 18px calc(110px + env(safe-area-inset-bottom,0px));
   display:flex;flex-direction:column;gap:16px;
 }
 
@@ -111,7 +112,7 @@ main.app-main{
   position:fixed;
   left: max(14px, calc(50vw - calc(var(--app-w)/2 - 14px)));
   right: max(14px, calc(50vw - calc(var(--app-w)/2 - 14px)));
-  bottom:14px;
+  bottom:calc(14px + env(safe-area-inset-bottom,0px));
   background:var(--glass-strong);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid var(--chrome-border);border-radius:26px;
   padding:10px 12px;
