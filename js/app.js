@@ -523,8 +523,7 @@ async function init() {
   });
 
   document.getElementById('back-btn').addEventListener('click', goBack);
-  document.getElementById('mapBackBtn').addEventListener('click', () => showScreen('dashboard'));
-  document.getElementById('settings-btn').addEventListener('click', () => showScreen('nastaveni'));
+document.getElementById('settings-btn').addEventListener('click', () => showScreen('nastaveni'));
   document.getElementById('theme-switch').addEventListener('click', toggleTheme);
   document.getElementById('fab').addEventListener('click', addSegmentPrompt);
 

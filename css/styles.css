@@ -48,8 +48,8 @@ a{color:inherit;text-decoration:none;}
 svg.icon{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 
 /* ── Background ── */
-.app-bg{position:fixed;inset:0;z-index:0;}
-.app-bg svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.app-bg{position:fixed;inset:0;z-index:0;overflow:hidden;}
+.app-bg svg{width:100%;height:100%;display:block;}
 .app-bg [hidden]{display:none;}
 
 /* ── App shell ── */
