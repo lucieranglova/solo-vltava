@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Solo Vltava</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#13162B">
@@ -30,6 +31,7 @@
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 109.8 9.8z"/></symbol>
     <symbol id="i-sync" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0115-6.7"/><path d="M21 12a9 9 0 01-15 6.7"/><path d="M16 2.6V8h-5"/><path d="M8 21.4V16h5"/></symbol>
     <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></symbol>
 
     <linearGradient id="skyRano" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFD9A8"/><stop offset="55%" stop-color="#FFB48C"/><stop offset="100%" stop-color="#7FD6C9"/></linearGradient>
     <linearGradient id="skyDen" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6EC6E0"/><stop offset="55%" stop-color="#9FE6DA"/><stop offset="100%" stop-color="#E3F7EF"/></linearGradient>
@@ -171,6 +173,11 @@
     </section>
 
 
+    <!-- SEZNAM ÚSEKŮ -->
+    <section class="screen" id="screen-seznam" hidden>
+      <div class="seg-list" id="seznam-list"></div>
+    </section>
+
     <!-- TRASA (mapa) -->
     <section class="screen" id="screen-trasa" hidden>
       <div class="map-header">
@@ -298,6 +305,7 @@
 
   <nav class="tabbar">
     <div class="tabbar__item is-active" data-nav="dashboard"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-home"/></svg></div></div>
+    <div class="tabbar__item" data-nav="seznam"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-list"/></svg></div></div>
     <div class="tabbar__item" data-nav="trasa"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-mountain"/></svg></div></div>
     <div class="tabbar__item" data-nav="organizace"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-calendar"/></svg></div></div>
   </nav>

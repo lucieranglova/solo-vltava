@@ -65,7 +65,7 @@ svg.icon{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stro
 .app-header{
   position:relative;z-index:2;
   display:flex;align-items:center;gap:10px;
-  padding:18px 18px 6px;
+  padding:calc(18px + env(safe-area-inset-top,0px)) 18px 6px;
 }
 .app-header__title{
   font-family:var(--font-display);font-weight:700;font-size:20px;
@@ -87,7 +87,9 @@ svg.icon{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stro
 
 /* ── Top scrim ── */
 .scrim-top{
-  position:fixed;top:0;left:0;right:0;height:140px;
+  position:fixed;
+  top:env(safe-area-inset-top,0px);
+  left:0;right:0;height:140px;
   background:linear-gradient(180deg, var(--glass-strong), transparent);
   z-index:1;pointer-events:none;
 }
@@ -578,6 +580,29 @@ main.app-main{
   main.app-main{padding-left:32px;padding-right:32px;}
   .app-header{padding-left:32px;padding-right:32px;}
 }
+
+/* ── Seznam úseků ── */
+.seg-list{display:flex;flex-direction:column;gap:8px;padding:8px 0 16px;}
+.seg-row{
+  display:flex;align-items:center;gap:12px;
+  background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--chrome-border);
+  border-radius:var(--radius-sm);
+  padding:13px 14px;cursor:pointer;
+  transition:opacity .15s;
+}
+.seg-row:active{opacity:0.7;}
+.seg-num{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:800;font-size:12px;
+  background:rgba(255,255,255,0.13);color:var(--chrome-text-dim);
+  border:1.5px solid var(--chrome-border);
+}
+.seg-num.is-tried{background:var(--accent);color:#0E2420;border-color:var(--accent);}
+.seg-info{flex:1;min-width:0;}
+.seg-name{font-weight:700;font-size:14px;color:var(--chrome-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.seg-meta{font-size:12px;color:var(--chrome-text-faint);margin-top:2px;}
 
 /* ── Trasa: kreslená mapa ── */
 .app-header[hidden]{display:none;}

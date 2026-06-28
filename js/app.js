@@ -194,6 +194,9 @@ function computePhase(raceDateStr) {
 function applyScene() {
   const scene = currentScene();
   document.querySelectorAll('.app-bg [data-scene]').forEach(el => { el.hidden = el.dataset.scene !== scene; });
+  const topColors = {rano:'#FFD9A8', den:'#6EC6E0', soumrak:'#262460', noc:'#0E1026'};
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = topColors[scene] || '#13162B';
 }
 function applyTheme() {
   const saved = localStorage.getItem('sv-theme') || 'dark';
@@ -229,10 +232,10 @@ function escHtml(str) {
 }
 
 /* ====================== NAVIGACE ====================== */
-const TAB_SCREENS = ['dashboard', 'trasa', 'organizace'];
+const TAB_SCREENS = ['dashboard', 'seznam', 'trasa', 'organizace'];
 const ALL_SCREENS = [...TAB_SCREENS, 'onboarding', 'segment', 'checklist', 'kontakty', 'kronika', 'nastaveni'];
 const TITLES = {
-  dashboard: 'Solo Vltava', vykony: 'Moje výkony', trasa: 'Trasa', organizace: 'Organizace',
+  dashboard: 'Solo Vltava', seznam: 'Úseky', trasa: 'Trasa', organizace: 'Organizace',
   segment: 'Detail úseku', checklist: 'Checklist', kontakty: 'Kontakty',
   kronika: 'Kronika', nastaveni: 'Nastavení', onboarding: 'Vítej'
 };
@@ -256,6 +259,7 @@ function showScreen(id, opts = {}) {
   if (id !== 'trasa') document.querySelector('main.app-main').scrollTo(0, 0);
 
   if (id === 'dashboard') renderDashboard();
+  if (id === 'seznam') renderSeznam();
   if (id === 'trasa') renderTrasa();
   if (id === 'checklist') renderChecklist();
   if (id === 'kontakty') renderContacts();
@@ -370,6 +374,27 @@ async function renderTrasa() {
   const tried = segs.filter(s => s.tried).length;
   document.getElementById('trasaCount').textContent = `${tried} / ${segs.length} úseků`;
   document.getElementById('trasaOverlay').innerHTML = buildRouteSvg(segs);
+}
+
+async function renderSeznam() {
+  const segs = await Segments.list();
+  const el = document.getElementById('seznam-list');
+  if (!segs.length) {
+    el.innerHTML = '<div class="empty-state">Žádné úseky ještě nejsou přidány.</div>';
+    return;
+  }
+  el.innerHTML = segs.map((seg, i) => `
+    <div class="seg-row" data-id="${escHtml(seg.id)}">
+      <div class="seg-num${seg.tried ? ' is-tried' : ''}">${i + 1}</div>
+      <div class="seg-info">
+        <div class="seg-name">${escHtml(seg.name)}</div>
+        <div class="seg-meta">${seg.distanceKm} km · +${seg.elevationGainM || 0} m</div>
+      </div>
+      <svg class="icon" style="flex-shrink:0;color:var(--chrome-text-faint)"><use href="#i-chevron-right"/></svg>
+    </div>`).join('');
+  el.querySelectorAll('.seg-row').forEach(row => {
+    row.addEventListener('click', () => openSegment(row.dataset.id));
+  });
 }
 
 async function addSegmentPrompt() {
