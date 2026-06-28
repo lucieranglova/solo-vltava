@@ -229,7 +229,7 @@ function escHtml(str) {
 }
 
 /* ====================== NAVIGACE ====================== */
-const TAB_SCREENS = ['dashboard', 'vykony', 'trasa', 'organizace'];
+const TAB_SCREENS = ['dashboard', 'trasa', 'organizace'];
 const ALL_SCREENS = [...TAB_SCREENS, 'onboarding', 'segment', 'checklist', 'kontakty', 'kronika', 'nastaveni'];
 const TITLES = {
   dashboard: 'Solo Vltava', vykony: 'Moje výkony', trasa: 'Trasa', organizace: 'Organizace',
@@ -256,7 +256,6 @@ function showScreen(id, opts = {}) {
   if (id !== 'trasa') document.querySelector('main.app-main').scrollTo(0, 0);
 
   if (id === 'dashboard') renderDashboard();
-  if (id === 'vykony') renderVykony();
   if (id === 'trasa') renderTrasa();
   if (id === 'checklist') renderChecklist();
   if (id === 'kontakty') renderContacts();
@@ -271,8 +270,6 @@ function goBack() {
 /* ====================== DASHBOARD ====================== */
 async function renderDashboard() {
   const cfg = await RaceConfig.get();
-  const stats = await Stats.get() || {};
-  const segs = await Segments.list();
 
   const name = cfg?.runnerName || 'Vojtí';
   document.getElementById('dash-greeting').textContent = `Ahoj, ${name}!`;
@@ -282,12 +279,7 @@ async function renderDashboard() {
     document.getElementById('dash-countdown').textContent = `${days} dní do startu`;
   }
 
-  const kmEl = document.getElementById('dash-km');
-  const elevEl = document.getElementById('dash-elev');
-  if (kmEl) countUp(kmEl, stats.totalKm || 0);
-  if (elevEl) countUp(elevEl, stats.totalElevationM || 0);
-
-  updateVltavaMap(segs);
+  renderVykony();
 
   if (computePhase(cfg?.raceDate) === 'post') showScreen('kronika', { skipStack: true });
 }
@@ -364,7 +356,7 @@ async function syncStrava() {
     const data = await resp.json();
     await Stats.set({ totalKm: data.totalKm, totalElevationM: data.totalElevationM, totalTrainings: data.totalTrainings, source: 'strava' });
     toast('Synchronizováno ze Strava ✓');
-    renderVykony();
+    renderDashboard();
   } catch (e) {
     toast('Chyba: ' + e.message);
   } finally {
@@ -563,7 +555,7 @@ async function init() {
     if (isNaN(km)) return toast('Neplatná hodnota');
     await Stats.set({ totalKm: km, source: 'manual' });
     toast('Uloženo ✓');
-    renderVykony();
+    renderDashboard();
   });
   document.getElementById('editElevBtn').addEventListener('click', async () => {
     const val = prompt('Celkové nastoupáno (m):');
@@ -572,7 +564,7 @@ async function init() {
     if (isNaN(m)) return toast('Neplatná hodnota');
     await Stats.set({ totalElevationM: m, source: 'manual' });
     toast('Uloženo ✓');
-    renderVykony();
+    renderDashboard();
   });
   document.getElementById('editTrainingsRow').addEventListener('click', async () => {
     const val = prompt('Počet tréninků:');
@@ -581,7 +573,7 @@ async function init() {
     if (isNaN(n)) return toast('Neplatná hodnota');
     await Stats.set({ totalTrainings: n });
     toast('Uloženo ✓');
-    renderVykony();
+    renderDashboard();
   });
 
   document.querySelectorAll('#checklist-tabs button').forEach(btn => {

@@ -114,53 +114,6 @@
       </div>
       <div class="greeting" id="dash-greeting">Ahoj!</div>
 
-      <div class="vltava-card">
-        <div class="vltava-card__header">
-          <div class="vltava-stat">
-            <div class="vltava-stat__row">
-              <span class="vltava-stat__num" id="dash-km">0</span>
-              <span class="vltava-stat__unit">km</span>
-            </div>
-            <span class="vltava-stat__label">naběháno</span>
-          </div>
-          <div class="vltava-card__sep"></div>
-          <div class="vltava-stat">
-            <div class="vltava-stat__row">
-              <span class="vltava-stat__num" id="dash-elev">0</span>
-              <span class="vltava-stat__unit">m</span>
-            </div>
-            <span class="vltava-stat__label">nastoupáno</span>
-          </div>
-        </div>
-
-        <div class="vltava-map-wrap">
-          <svg viewBox="0 0 340 130" fill="none" class="vltava-map" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 15,95 C 30,70 55,105 75,82 C 95,59 108,98 130,76 C 152,54 165,90 188,68 C 211,46 222,82 245,60 C 268,38 280,74 300,52 C 315,34 322,38 325,30"
-              stroke="rgba(247,248,252,0.12)" stroke-width="3.5" stroke-linecap="round"/>
-            <path id="river-progress"
-              d="M 15,95 C 30,70 55,105 75,82 C 95,59 108,98 130,76 C 152,54 165,90 188,68 C 211,46 222,82 245,60 C 268,38 280,74 300,52 C 315,34 322,38 325,30"
-              stroke="#2BC4B0" stroke-width="3.5" stroke-linecap="round"
-              style="stroke-dasharray:9999;stroke-dashoffset:9999;transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)"/>
-            <circle class="river-waypoint" data-order="0"  cx="15"  cy="95" r="5.5" fill="rgba(247,248,252,0.35)"/>
-            <circle class="river-waypoint" data-order="2"  cx="75"  cy="82" r="3"   fill="rgba(247,248,252,0.35)"/>
-            <circle class="river-waypoint" data-order="4"  cx="130" cy="76" r="3"   fill="rgba(247,248,252,0.35)"/>
-            <circle class="river-waypoint" data-order="6"  cx="188" cy="68" r="3"   fill="rgba(247,248,252,0.35)"/>
-            <circle class="river-waypoint" data-order="8"  cx="245" cy="60" r="3"   fill="rgba(247,248,252,0.35)"/>
-            <circle class="river-waypoint" data-order="10" cx="300" cy="52" r="3"   fill="rgba(247,248,252,0.35)"/>
-            <circle class="river-waypoint" data-order="12" cx="325" cy="30" r="5.5" fill="rgba(247,248,252,0.35)"/>
-            <text x="4"   y="113" font-size="8.5" fill="rgba(247,248,252,0.6)" font-family="'Nunito',sans-serif" font-weight="700">Kvilda</text>
-            <text x="302" y="22"  font-size="8.5" fill="rgba(247,248,252,0.6)" font-family="'Nunito',sans-serif" font-weight="700">Praha</text>
-          </svg>
-        </div>
-
-        <div class="vltava-progress-label">
-          <span id="dash-route-pct">0</span><span>&#8239;% trasy</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- MOJE VÝKONY -->
-    <section class="screen" id="screen-vykony" hidden>
       <div class="stat-flip" id="statFlip">
         <div class="stat-flip__inner" id="flipInner">
           <div class="stat-face stat-face--front">
@@ -214,9 +167,9 @@
         <div class="card__value" id="numTrainings">0</div>
         <div class="edit-pencil"><svg class="icon" width="14" height="14"><use href="#i-check"/></svg></div>
       </div>
-      <button class="cta-button is-secondary" id="stravaConnectBtn">Připojit Strava</button>
       <div class="note-block">Bez propojení na Strava lze čísla kdykoliv upravit ručně.</div>
     </section>
+
 
     <!-- TRASA (mapa) -->
     <section class="screen" id="screen-trasa" hidden>
@@ -336,6 +289,7 @@
         <div><div class="toggle-card__label">Světlý režim</div><div class="toggle-card__sub">Výchozí je tmavý</div></div>
         <div class="switch" id="theme-switch"></div>
       </div>
+      <button class="cta-button is-secondary" id="stravaConnectBtn">Připojit Strava</button>
       <div class="card">
         <div class="card__body"><div class="card__title">Solo Vltava</div><div class="card__meta">v1.0 · PWA pro dva</div></div>
       </div>
@@ -347,7 +301,6 @@
 
   <nav class="tabbar">
     <div class="tabbar__item is-active" data-nav="dashboard"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-home"/></svg></div></div>
-    <div class="tabbar__item" data-nav="vykony"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-activity"/></svg></div></div>
     <div class="tabbar__item" data-nav="trasa"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-mountain"/></svg></div></div>
     <div class="tabbar__item" data-nav="organizace"><div class="tabbar__icon-wrap"><svg class="icon"><use href="#i-calendar"/></svg></div></div>
   </nav>
