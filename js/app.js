@@ -552,7 +552,7 @@ document.getElementById('settings-btn').addEventListener('click', () => showScre
   document.getElementById('theme-switch').addEventListener('click', toggleTheme);
   document.getElementById('fab').addEventListener('click', addSegmentPrompt);
 
-  document.getElementById('trasaOverlay').addEventListener('click', e => {
+  document.getElementById('trasaOverlay')?.addEventListener('click', e => {
     const hit = e.target.closest('.map-hit');
     if (hit?.dataset.id) openSegment(hit.dataset.id);
   });

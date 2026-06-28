@@ -1,4 +1,4 @@
-const CACHE = 'solo-vltava-v5';
+const CACHE = 'solo-vltava-v6';
 const ASSETS = ['./', './index.html', './css/styles.css', './manifest.json', './icons/icon.svg'];
 
 self.addEventListener('install', (e) => {
