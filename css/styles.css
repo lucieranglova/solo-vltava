@@ -49,7 +49,7 @@ svg.icon{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stro
 
 /* ── Background ── */
 .app-bg{position:fixed;inset:0;z-index:0;overflow:hidden;}
-.app-bg svg{width:100%;height:100%;display:block;}
+.app-bg svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
 .app-bg [hidden]{display:none;}
 
 /* ── App shell ── */
@@ -83,6 +83,7 @@ svg.icon{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stro
 }
 /* Ghost = removed from layout (title snaps left on root screens) */
 .icon-btn.is-ghost{display:none;}
+.icon-btn[hidden]{display:none;}
 
 /* ── Top scrim ── */
 .scrim-top{
