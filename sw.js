@@ -1,5 +1,5 @@
-const CACHE = 'solo-vltava-v6';
-const ASSETS = ['./', './index.html', './css/styles.css', './manifest.json', './icons/icon.svg'];
+const CACHE = 'solo-vltava-v7';
+const ASSETS = ['./', './index.html', './css/styles.css', './manifest.json', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
